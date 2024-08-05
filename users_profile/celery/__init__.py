@@ -1,0 +1,3 @@
+from users_profile.celery.update_or_create_usdt_balance import update_or_create_usdt_balance
+from users_profile.celery.update_or_created_d9_balance import update_or_create_d9_balance
+from users_profile.celery.update_or_create_user_burning_profile import update_or_create_burning_profile

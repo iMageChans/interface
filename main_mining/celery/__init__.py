@@ -1,0 +1,1 @@
+from main_mining.celery.update_or_created_celery import update_or_created_total_burned
