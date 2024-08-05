@@ -87,23 +87,16 @@ class JSONExtractor:
         if isinstance(data, dict):
             self.checks = True
         self.checks = False
+        data = data.get('result', {}).get('Ok', {}).get('data', {})
+        res = data['Ok']
 
-        res = data.get('result', {}).get('Ok', {}).get('data', {})
-
-        if res['Ok']:
-
-            amount_burned = res.get('amount_burned', 0)
-            balance_due = res.get('balance_due', 0)
-            balance_paid = res.get('balance_paid', 0)
-            last_withdrawal = res.get('last_withdrawal', {}).get('time', 0)
-            last_burn = res.get('last_burn', {}).get('time', 0)
-
+        if res:
             return {
-                "amount_burned": numbers.DecimalTruncation(2).format_d9(amount_burned),
-                "balance_due": numbers.DecimalTruncation(2).format_d9(balance_due),
-                "balance_paid": numbers.DecimalTruncation(2).format_d9(balance_paid),
-                "last_withdrawal": last_withdrawal,
-                "last_burn": last_burn,
+                "amount_burned": numbers.DecimalTruncation(2).format_d9(res['amount_burned']),
+                "balance_due": numbers.DecimalTruncation(2).format_d9(res['balance_due']),
+                "balance_paid": numbers.DecimalTruncation(2).format_d9(res['balance_paid']),
+                "last_withdrawal": res['last_withdrawal']['time'],
+                "last_burn": res['last_burn']['time'],
             }
         else:
             return {
@@ -120,25 +113,19 @@ class JSONExtractor:
             self.checks = True
         self.checks = False
 
-        res = data.get('result', {}).get('Ok', {}).get('data', {})
+        data = data.get('result', {}).get('Ok', {}).get('data', {})
+        res = data['Ok']
 
-        if res['Ok']:
-
-            green_points = res.get('green_points', 0)
-            relationship_factors = res.get('relationship_factors', [0, 0])
-            last_conversion = res.get('last_conversion', 0)
-            redeemed_usdt = res.get('redeemed_usdt', 0)
-            redeemed_d9 = res.get('redeemed_d9', 0)
-            created_at = res.get('created_at', 0)
+        if res:
 
             return {
-                "green_points": numbers.DecimalTruncation(2).format_usdt(green_points),
-                # "relationship_factors": list(res['relationship_factors']),
-                "red_points": numbers.DecimalTruncation(2).format_usdt(relationship_factors[0] + relationship_factors[1]),
-                "last_conversion": last_conversion,
-                "redeemed_usdt": numbers.DecimalTruncation(2).format_usdt(redeemed_usdt),
-                "redeemed_d9": numbers.DecimalTruncation(2).format_d9(redeemed_d9),
-                "created_at": created_at,
+                "green_points": numbers.DecimalTruncation(2).format_usdt(res['green_points']),
+                "relationship_green_points": numbers.DecimalTruncation(2).format_usdt(res['relationship_factors'][0]),
+                "relationship_red_points": numbers.DecimalTruncation(2).format_usdt(res['relationship_factors'][1]),
+                "last_conversion": res['last_conversion'],
+                "redeemed_usdt": numbers.DecimalTruncation(2).format_usdt(res['redeemed_usdt']),
+                "redeemed_d9": numbers.DecimalTruncation(2).format_d9(res['redeemed_d9']),
+                "created_at": res['created_at'],
             }
         else:
             return {

@@ -23,5 +23,5 @@ def update_or_created_rank():
             defaults=data
         )
 
-        print({"node_id": ranks.node_id, "node_name": ranks.node_name, "sharing_percent": ranks.sharing_percent,
-               "accumulative_votes": ranks.accumulative_votes, "created": created})
+        # print({"node_id": ranks.node_id, "node_name": ranks.node_name, "sharing_percent": ranks.sharing_percent,
+        #        "accumulative_votes": ranks.accumulative_votes, "created": created})

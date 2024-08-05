@@ -21,7 +21,7 @@ app.conf.beat_schedule = {
     },
     'get_rank': {
         'task': 'votings.tasks.get_rank',
-        'schedule': timedelta(seconds=60),
+        'schedule': timedelta(seconds=600),
     },
     'update_or_created_all_volume_celery': {
         'task': 'mining.tasks.update_or_created_all_volume_celery',

@@ -21,5 +21,5 @@ def update_or_create_burning_profile(account_id, keypair):
         account_id=data['account_id'],
         defaults=data
     )
-    print({"account_id": user_burning_profile.account_id, "created": created})
+    print({"account_id": user_burning_profile.account_id, "data": data, "created": created})
     return user_burning_profile

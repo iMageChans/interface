@@ -6,11 +6,11 @@ class RankAdmin(admin.ModelAdmin):
     list_display = ('node_id', 'node_name', 'sharing_percent', 'accumulative_votes', 'created_at', 'updated_at')
     list_display_links = ('node_id', 'node_name')
     search_fields = ('node_id', 'node_name')
-    list_filter = ('sharing_percent', 'accumulative_votes', 'created_at')
+    list_filter = ('sharing_percent', 'created_at')
     readonly_fields = ('created_at', 'updated_at')
     fieldsets = (
         (None, {
-            'fields': ('node_id', 'node_name', 'sharing_percent', 'accumulative_votes')
+            'fields': ('node_id', 'node_name', 'sharing_percent',)
         }),
         ('time', {
             'fields': ('created_at', 'updated_at'),

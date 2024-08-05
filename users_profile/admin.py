@@ -19,14 +19,16 @@ class UserBurningProfileAdmin(admin.ModelAdmin):
 
 @admin.register(UserMerchantProfile)
 class UserMerchantProfileAdmin(admin.ModelAdmin):
-    list_display = ('account_id', 'created_at', 'red_points', 'last_conversion', 'redeemed_usdt', 'redeemed_d9', 'created_at')
+    list_display = (
+    'account_id', 'created_at', 'relationship_green_points', 'relationship_red_points', 'last_conversion',
+    'redeemed_usdt', 'redeemed_d9', 'created_at')
 
 
 @admin.register(UserBalances)
 class UserBalancesAdmin(admin.ModelAdmin):
-    list_display = ('account_id', 'created_at', 'balance_d9', )
+    list_display = ('account_id', 'created_at', 'balance_d9',)
 
 
 @admin.register(USDTBalances)
 class USDTBalancesAdmin(admin.ModelAdmin):
-    list_display = ('account_id', 'created_at', 'balance_usdt', )
+    list_display = ('account_id', 'created_at', 'balance_usdt',)

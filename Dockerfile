@@ -10,7 +10,8 @@ RUN chmod +x /entrypoint.sh
 
 RUN apt-get update && apt-get install -y netcat-openbsd
 
-RUN pip install --upgrade pip
+RUN python -m pip install --upgrade pip
+
 RUN pip install -r requirements.txt
 
 ENV PYTHONUNBUFFERED 1
