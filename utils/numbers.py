@@ -82,3 +82,6 @@ class DecimalTruncation:
 
     def format_point(self, number):
         return self.truncate(format_number(number, 3))
+
+    def format(self, number):
+        return self.truncate(format_number(number, 0))

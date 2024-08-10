@@ -17,4 +17,5 @@ urlpatterns = [
     path('allowance/usdt/', USDTAllowanceView.as_view(), name='usdt-allowance'),
     path('allowance/merchant/', MerchantAllowanceView.as_view(), name='merchant-allowance'),
     path('allowance/cross/chain/', CrossChainAllowanceView.as_view(), name='cross-chain-allowance'),
+    path('price/rate/', PriceRateView.as_view(), name='price-rate'),
 ]

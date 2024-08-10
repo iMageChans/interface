@@ -76,3 +76,8 @@ class MerchantAllowanceView(BaseView):
 class CrossChainAllowanceView(BaseView):
     serializer_class = serializers.CrossChainAllowanceSerializer
     action_class = actions.CrossChainAllowance
+
+
+class PriceRateView(BaseView):
+    serializer_class = serializers.GetCurrencyProfileSerializer
+    action_class = actions.PriceRate

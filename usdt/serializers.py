@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from usdt.models import CurrencyProfile
 
 
 class GetBalancesSerializer(serializers.Serializer):
@@ -79,3 +80,13 @@ class TransferFromSerializer(serializers.Serializer):
     from_address = serializers.CharField(required=True)
     to_address = serializers.CharField(required=True)
     amount = serializers.IntegerField(required=True)
+
+
+class GetCurrencyProfileSerializer(serializers.Serializer):
+    name = serializers.CharField(required=False)
+
+
+class CurrencyProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CurrencyProfile
+        fields = '__all__'

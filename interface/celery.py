@@ -27,10 +27,10 @@ app.conf.beat_schedule = {
         'task': 'mining.tasks.update_or_created_all_volume_celery',
         'schedule': timedelta(seconds=300),
     },
-    # 'get_vote_limit_celery': {
-    #     'task': 'node.tasks.get_vote_limit_celery',
-    #     'schedule': timedelta(seconds=60),
-    # },
+    'update_or_created_currency_profile_celery': {
+        'task': 'usdt.tasks.update_or_created_currency_profile_celery',
+        'schedule': timedelta(seconds=600),
+    },
     # 'get_node_ranks': {
     #     'task': 'voting.tasks.get_node_ranks',
     #     'schedule': timedelta(seconds=180),
