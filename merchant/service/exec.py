@@ -40,7 +40,7 @@ class Exec(D9Contract):
     def send_usdt_payment_to_merchant(self, merchant_id: str, amount: int) -> ContractExecutionReceipt:
         params = {
             "merchant_id": merchant_id,
-            "usdt_payment": amount
+            "usdt_amount": amount
         }
         return self.contract_exec('send_usdt_payment_to_merchant', params, value=amount)
 
