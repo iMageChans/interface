@@ -12,8 +12,6 @@ class SendD9PaymentToMerchant(BaseActionsExec):
         self.results = Exec(self.keypair).send_d9_payment_to_merchant(self.merchant_id.get_valid_address(),
                                                                       to_d9(validated_data['amount']))
 
-        d9_balance = update_or_create_d9_balance_celery.delay(self.merchant_id.mate_data_address(),
-                                                              self.keypair.private_key.hex())
+        d9_balance = update_or_create_d9_balance_celery.delay(self.merchant_id.mate_data_address())
 
-        merchant_balance = update_or_create_d9_balance_celery.delay(self.merchant_id.mate_data_address(),
-                                                                    self.keypair.private_key.hex())
+        merchant_balance = update_or_create_d9_balance_celery.delay(self.merchant_id.mate_data_address())
