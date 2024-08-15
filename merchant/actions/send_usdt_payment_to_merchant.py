@@ -12,7 +12,7 @@ class SendUSDTPaymentToMerchant(BaseActionsExec):
         self.results = Exec(self.keypair).send_usdt_payment_to_merchant(self.merchant_id.get_valid_address(),
                                                                         to_usdt(validated_data['amount']))
 
-        usdt_balance = update_or_create_usdt_balance_celery.delay(self.account_id.mate_data_address(),
+        usdt_balance = update_or_create_usdt_balance_celery.delay(self.merchant_id.mate_data_address(),
                                                                   self.keypair.private_key.hex())
 
         merchant_balance = update_or_create_usdt_balance_celery.delay(self.merchant_id.mate_data_address(),
