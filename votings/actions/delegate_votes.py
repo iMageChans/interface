@@ -15,7 +15,7 @@ class DelegateVotes(BaseActionsExec):
         }
 
         voting = Exec()
-        delegations_voting = voting.delegate_votes(delegations=delegations)
+        delegations_voting = voting.delegate_votes(delegations=[delegations])
         nonce = voting.d9_interface.get_account_nonce(account_address=self.keypair.ss58_address)
         self.extrinsic = voting.d9_interface.create_signed_extrinsic(call=delegations_voting,
                                                                      keypair=self.keypair,
@@ -28,4 +28,3 @@ class DelegateVotes(BaseActionsExec):
 
     def is_success(self):
         return True
-    
