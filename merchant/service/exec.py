@@ -17,7 +17,7 @@ class Exec(D9Contract):
 
     def subscribe(self, usdt_base_units: int) -> ContractExecutionReceipt:
         params = {
-            "usdt_amount": hex(usdt_base_units),
+            "usdt_amount": usdt_base_units,
         }
         return self.contract_exec('subscribe', params, usdt_base_units)
 
