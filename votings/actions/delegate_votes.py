@@ -15,10 +15,17 @@ class DelegateVotes(BaseActionsExec):
         }
 
         voting = Exec()
-        delegations_voting = voting.delegate_votes(delegations=[delegations])
+        delegations_voting = voting.delegate_votes(delegations=delegations)
         nonce = voting.d9_interface.get_account_nonce(account_address=self.keypair.ss58_address)
         self.extrinsic = voting.d9_interface.create_signed_extrinsic(call=delegations_voting,
                                                                      keypair=self.keypair,
                                                                      nonce=nonce)
         self.results = voting.d9_interface.submit_extrinsic(self.extrinsic,
                                                             wait_for_inclusion=True)
+
+    def serializers(self):
+        return self.extrinsic.value_serialized
+
+    def is_success(self):
+        return True
+    
