@@ -22,9 +22,3 @@ class DelegateVotes(BaseActionsExec):
                                                                      nonce=nonce)
         self.results = voting.d9_interface.submit_extrinsic(self.extrinsic,
                                                             wait_for_inclusion=True)
-
-    def serializers(self):
-        return self.extrinsic.value_serialized
-
-    def is_success(self):
-        return True
