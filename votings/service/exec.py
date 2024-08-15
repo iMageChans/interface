@@ -53,7 +53,7 @@ class Exec(D9PalletsExec):
         Returns:
             GenericCall
           """
-        return self.compose_call("DelegateVotes", {'delegations': delegations})
+        return self.compose_call("delegate_votes", {'delegations': delegations})
 
     def redistribute_votes(self, from_candidate: str, to_candidate: str):
         """
@@ -64,7 +64,7 @@ class Exec(D9PalletsExec):
         Returns:
             GenericCall
            """
-        return self.compose_call("RedistributeVotes", {'from': from_candidate, 'to': to_candidate})
+        return self.compose_call("redistribute_votes", {'from': from_candidate, 'to': to_candidate})
 
     def remove_candidacy(self):
         """
