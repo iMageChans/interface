@@ -10,8 +10,10 @@ class DelegateVotes(BaseActionsExec):
         candidate = ValidAddress(validated_data['candidate'])
 
         delegations = {
-            "candidate": candidate.get_valid_address(),
-            "amount": validated_data['amount'],
+            "votes": {
+                "candidate": candidate.get_valid_address(),
+                "amount": validated_data['amount'],
+            }
         }
 
         voting = Exec()
