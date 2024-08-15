@@ -13,3 +13,9 @@ class Subscribe(BaseActionsExec):
                                                                   self.keypair.private_key.hex())
         merchant_expiry = update_or_created_get_merchant_expiry_celery.delay(self.account_id.mate_data_address(),
                                                                              self.keypair.private_key.hex())
+
+    def serializers(self):
+        return self.results.value_serialized
+
+    def is_success(self):
+        return True

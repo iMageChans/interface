@@ -15,11 +15,11 @@ class Exec(D9Contract):
             keypair=keypair
         )
 
-    def subscribe(self, usdt_base_units: int) -> ContractExecutionReceipt:
+    def subscribe(self, usdt_base_units: int):
         params = {
             "usdt_amount": usdt_base_units,
         }
-        return self.contract_exec('subscribe', params)
+        return self.contract_read('subscribe', params)
 
     def redeem_d9(self) -> ContractExecutionReceipt:
         return self.contract_exec('redeem_d9')
