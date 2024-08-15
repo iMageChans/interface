@@ -8,6 +8,8 @@ class GenerateQRCode:
         keypair = keystone.check_keypair(validated_data['keypair'])
         amount = validated_data['amount']
         base_url = request.build_absolute_uri('/api/qrcode/process/')
+        if base_url.startswith('http://'):
+            base_url = base_url.replace('http://', 'https://', 1)
         data = {
             "account_id": f"Dn{keypair.ss58_address}",
             "amount": amount,
