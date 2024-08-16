@@ -122,12 +122,14 @@ class JSONExtractor:
             dt = datetime.datetime.fromtimestamp(timestamp / 1000)
             now = datetime.datetime.now()
             days_difference = (now - dt).days
-            redeemed_usdt = numbers.DecimalTruncation(2).format_usdt(res['green_points'] * 0.0005 / 100 * days_difference)
+            redeemed_usdt = numbers.DecimalTruncation(2).format_usdt((res['green_points'] + res['relationship_factors'][
+                0] + res['relationship_factors'][1]) * 0.0005 / 100 * days_difference)
 
             return {
                 "green_points": numbers.DecimalTruncation(2).format_usdt(res['green_points']),
-                "relationship_green_points": numbers.DecimalTruncation(2).format_usdt(res['relationship_factors'][0]),
-                "relationship_red_points": numbers.DecimalTruncation(2).format_usdt(res['relationship_factors'][1]),
+                "relationship_green_points": numbers.DecimalTruncation(2).format_usdt(res['green_points'] * 0.0005),
+                "relationship_red_points": numbers.DecimalTruncation(2).format_usdt(
+                    res['relationship_factors'][0] + res['relationship_factors'][1]),
                 "last_conversion": res['last_conversion'],
                 "redeemed_usdt": redeemed_usdt,
                 "redeemed_d9": numbers.DecimalTruncation(2).format_d9(res['redeemed_d9']),
