@@ -6,7 +6,7 @@ from votings.serializers import RankSerializer
 class GetRank(BaseActionsRead):
     def __init__(self, validated_data):
         super().__init__(validated_data)
-        rank = Rank.objects.all().order_by('-accumulative_votes')
+        rank = Rank.objects.all()
         self.results = RankSerializer(rank, many=True).data
 
     def serializers(self):
