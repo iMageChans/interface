@@ -49,7 +49,7 @@ class Read(D9PalletsRead):
         Returns:
             dict: node metadata
         """
-        result = self.compose_query('usersVotingInterests', [account_id])
+        result = self.compose_query('UsersVotingInterests', [account_id])
         return result.value_serialized
 
 
