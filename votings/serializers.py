@@ -62,7 +62,7 @@ class GetRankSerializer(serializers.Serializer):
     keypair = serializers.CharField(required=True)
 
 
-class RankSerializer(serializers.Serializer):
+class RankSerializer(serializers.ModelSerializer):
     class Meta:
         model = Rank
         fields = '__all__'
