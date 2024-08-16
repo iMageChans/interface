@@ -66,3 +66,8 @@ class GetRankView(BaseView):
 class TryRemoveVotesFromCandidateView(BaseView):
     serializer_class = serializers.TryRemoveVotesFromCandidateSerializer
     action_class = actions.TryRemoveVotesFromCandidate
+
+
+class UsersVotingInterestsView(BaseView):
+    serializer_class = serializers.UsersVotingInterestsSerializer
+    action_class = actions.UsersVotingInterests

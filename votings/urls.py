@@ -15,4 +15,5 @@ urlpatterns = [
     path('delegate/votes/', DelegateVotesView.as_view(), name='delegate-votes'),
     path('get/rank/', GetRankView.as_view(), name='get-rank'),
     path('try/remove/votes/from/candidate/', TryRemoveVotesFromCandidateView.as_view(), name='try-remove-votes-from-candidate'),
+    path('users/voting/interests/', UsersVotingInterestsView.as_view(), name='users-voting-interests'),
 ]

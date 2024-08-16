@@ -11,3 +11,4 @@ from votings.actions.change_candidate_support_share import ChangeCandidateSuppor
 from votings.actions.delegate_votes import DelegateVotes
 from votings.actions.get_rank import GetRank
 from votings.actions.try_remove_votes_from_candidate import TryRemoveVotesFromCandidate
+from votings.actions.users_voting_interests import UsersVotingInterests

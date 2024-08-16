@@ -43,6 +43,16 @@ class Read(D9PalletsRead):
         result = self.compose_query('NodeAccumulativeVotes', [node_id])
         return result.value_serialized
 
+    def users_voting_interests(self, account_id: str):
+        """
+        gets node metadata
+        Returns:
+            dict: node metadata
+        """
+        result = self.compose_query('usersVotingInterests', [account_id])
+        return result.value_serialized
+
+
     def get_node_metadata(self, node_id: str):
         """
         gets node metadata

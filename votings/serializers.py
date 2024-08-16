@@ -73,3 +73,7 @@ class RankSerializer(serializers.ModelSerializer):
         model = Rank
         exclude = ['id']
 
+
+class UsersVotingInterestsSerializer(serializers.Serializer):
+    keypair = serializers.CharField(required=True)
+
