@@ -31,8 +31,8 @@ app.conf.beat_schedule = {
         'task': 'usdt.tasks.update_or_created_currency_profile_celery',
         'schedule': timedelta(seconds=600),
     },
-    # 'get_node_ranks': {
-    #     'task': 'voting.tasks.get_node_ranks',
-    #     'schedule': timedelta(seconds=180),
-    # },
+    'update_or_created_token_market_information_celery': {
+        'task': 'amm.tasks.update_or_created_token_market_information_celery',
+        'schedule': timedelta(seconds=60),
+    },
 }
