@@ -65,5 +65,5 @@ class GetRankSerializer(serializers.Serializer):
 class RankSerializer(serializers.ModelSerializer):
     class Meta:
         model = Rank
-        fields = '__all__'
+        exclude = ['id']
 
