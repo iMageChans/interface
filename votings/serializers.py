@@ -27,7 +27,7 @@ class GetNodeMetaDataSerializer(serializers.Serializer):
 
 class NodeToUserVoteTotalsSerializer(serializers.Serializer):
     keypair = serializers.CharField(required=True)
-    node_id = serializers.CharField(required=True)
+    node_id = serializers.CharField(required=False)
     user_id = serializers.CharField(required=False)
 
 
