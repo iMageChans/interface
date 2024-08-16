@@ -10,3 +10,4 @@ from votings.actions.change_candidate_name import ChangeCandidateName
 from votings.actions.change_candidate_support_share import ChangeCandidateSupportShare
 from votings.actions.delegate_votes import DelegateVotes
 from votings.actions.get_rank import GetRank
+from votings.actions.try_remove_votes_from_candidate import TryRemoveVotesFromCandidate

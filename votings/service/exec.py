@@ -75,3 +75,6 @@ class Exec(D9PalletsExec):
             GenericCall
           """
         return self.compose_call("RemoveCandidacy")
+
+    def try_remove_votes_from_candidate(self, candidate: str, votes: int):
+        return self.compose_call("try_remove_votes_from_candidate", {'candidate': candidate, 'votes': votes})

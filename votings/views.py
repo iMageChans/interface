@@ -60,4 +60,9 @@ class DelegateVotesView(BaseView):
 
 class GetRankView(BaseView):
     serializer_class = serializers.GetRankSerializer
-    action_class = actions.GetRank
+    action_class = actions.get_rank
+
+
+class TryRemoveVotesFromCandidateView(BaseView):
+    serializer_class = serializers.TryRemoveVotesFromCandidateSerializer
+    action_class = actions.TryRemoveVotesFromCandidate

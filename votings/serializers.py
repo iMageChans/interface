@@ -52,6 +52,12 @@ class ChangeCandidateSupportShareSerializer(serializers.Serializer):
     percent = serializers.IntegerField(required=True)
 
 
+class TryRemoveVotesFromCandidateSerializer(serializers.Serializer):
+    keypair = serializers.CharField(required=True)
+    node_id = serializers.CharField(required=True)
+    votes = serializers.IntegerField(required=True)
+
+
 class DelegateVotesSerializer(serializers.Serializer):
     keypair = serializers.CharField(required=True)
     candidate = serializers.CharField(required=True)
