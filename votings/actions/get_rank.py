@@ -6,11 +6,10 @@ from votings.serializers import RankSerializer
 class GetRank(BaseActionsRead):
     def __init__(self, validated_data):
         super().__init__(validated_data)
-        rank = Rank.objects.all()
-        self.results = RankSerializer(rank, many=True).data
+        self.results = Rank.objects.all()
 
     def serializers(self):
-        return self.results
+        return RankSerializer(self.results, many=True).data
 
     def is_success(self):
         return True
