@@ -21,3 +21,8 @@ class BurningView(BaseView):
 class WithdrawView(BaseView):
     serializer_class = serializers.BurningWithdrawSerializer
     action_class = actions.Withdraw
+
+
+class GetReturnPercentView(BaseView):
+    serializer_class = serializers.GetReturnPercentSerializer
+    action_class = actions.GetReturnPercent

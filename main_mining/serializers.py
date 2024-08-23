@@ -30,3 +30,7 @@ class GetTotalBurnedSerializer(serializers.Serializer):
 class GetBurnUserPortfolioSerializer(serializers.Serializer):
     keypair = serializers.CharField(required=True)
     account_id = serializers.CharField(required=False)
+
+
+class GetReturnPercentSerializer(serializers.Serializer):
+    keypair = serializers.CharField(required=True)

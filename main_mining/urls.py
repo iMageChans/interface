@@ -6,4 +6,5 @@ urlpatterns = [
     path('get/user/burning/profile/', GetUserBurningProfileView.as_view(), name='get-user-burning-profile'),
     path('burning/', BurningView.as_view(), name='user-burning'),
     path('withdraw/', WithdrawView.as_view(), name='user-withdraw'),
+    path('get/return/percent/', GetReturnPercentView.as_view(), name='get-return-percent'),
 ]

@@ -2,3 +2,4 @@ from main_mining.actions.get_total_burned import GetTotalBurned
 from main_mining.actions.get_portfolio import GetUserBurningProfile
 from main_mining.actions.burning import Burning
 from main_mining.actions.withdraw import Withdraw
+from main_mining.actions.get_return_percent import GetReturnPercent
