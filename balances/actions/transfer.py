@@ -24,11 +24,11 @@ class Transfer(BaseActionsExec):
         self.results = balance.d9_interface.submit_extrinsic(self.extrinsic,
                                                              wait_for_inclusion=True)
 
-        d9_balance_from = update_or_create_d9_balance_celery.delay(self.account_id.mate_data_address())
-        d9_balance_to = update_or_create_d9_balance_celery.delay(self.to_address.mate_data_address())
-
     def serializers(self):
         return extractor.get_transfer_data(self.results)
 
     def is_success(self):
+        if self.results.is_success:
+            d9_balance_from = update_or_create_d9_balance_celery.delay(self.account_id.mate_data_address())
+            d9_balance_to = update_or_create_d9_balance_celery.delay(self.to_address.mate_data_address())
         return self.results.is_success

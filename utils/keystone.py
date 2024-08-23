@@ -14,7 +14,11 @@ def check_keypair(data):
         except ValueError:
             raise ValueError("ECDSA mnemonic only supports english")
     elif isinstance(data, str):
-        return Keypair.create_from_private_key(data, ss58_format=9)
+        try:
+            keypair = Keypair.create_from_private_key(data, ss58_format=9)
+        except ValueError:
+            keypair = Keypair.create_from_seed(data, ss58_format=9)
+        return keypair
 
 
 class ValidAddress:
