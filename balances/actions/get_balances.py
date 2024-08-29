@@ -1,19 +1,17 @@
+from balances.service.read import Read
 from base.actions import BaseActionsRead
-from balances.tasks import update_or_create_d9_balance_celery
-from users_profile.serializers import *
+from utils import numbers
+from utils.JSONExtractor import extractor
 
 
 class GetBalances(BaseActionsRead):
     def __init__(self, validated_data):
         super().__init__(validated_data)
-        try:
-            user_balances = UserBalances.objects.get(account_id=self.account_id.mate_data_address())
-            self.results = UserBalancesSerializer(user_balances).data
-        except UserBalances.DoesNotExist:
-            self.results = update_or_create_d9_balance_celery(account_id=self.account_id.mate_data_address())
+        balances_read = Read()
+        self.results = balances_read.get_balances(account_id=self.account_id.get_valid_address())
 
     def serializers(self):
-        return self.results
+        return {"balance_d9": numbers.DecimalTruncation(4).format_d9(extractor.get_balances_d9(self.results))}
 
     def is_success(self):
         return True
