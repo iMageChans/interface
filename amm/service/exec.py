@@ -22,8 +22,11 @@ class Exec(D9Contract):
         }
         return self.contract_exec('add_liquidity', params, value=d9_amount)
 
-    def remove_liquidity(self) -> ContractExecutionReceipt:
-        return self.contract_exec('remove_liquidity')
+    def remove_liquidity(self, percent: int) -> ContractExecutionReceipt:
+        params = {
+            "percent": percent,
+        }
+        return self.contract_exec('remove_liquidity', params)
 
     def get_d9(self, usdt: int) -> ContractExecutionReceipt:
         params = {

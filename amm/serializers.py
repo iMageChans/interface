@@ -64,6 +64,7 @@ class AddLiquiditySerializer(serializers.Serializer):
 
 class RemoveLiquiditySerializer(serializers.Serializer):
     keypair = serializers.CharField(required=True)
+    percent = serializers.IntegerField(required=True)
 
 
 class GetD9Serializer(serializers.Serializer):
