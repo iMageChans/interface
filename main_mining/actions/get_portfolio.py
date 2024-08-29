@@ -1,23 +1,17 @@
 from base.actions import BaseActionsRead
-from main_mining import tasks
-from users_profile.serializers import *
+from main_mining.service.read import Read
+from utils.JSONExtractor import extractor
 
 
 class GetUserBurningProfile(BaseActionsRead):
     def __init__(self, validated_data):
         super().__init__(validated_data)
-        try:
-            user_burning_profile = UserBurningProfile.objects.get(pk=self.account_id.mate_data_address())
-            self.results = UserBurningProfileSerializer(user_burning_profile).data
-        except UserBurningProfile.DoesNotExist:
-            user_burning_profile = tasks.update_or_create_user_burning_profile_celery(
-                account_id=self.account_id.mate_data_address(),
-                keypair=self.keypair.private_key.hex()
-            )
-            self.results = UserBurningProfileSerializer(user_burning_profile).data
+
+        main_read = Read(self.keypair)
+        self.results = main_read.get_portfolio(self.account_id.get_valid_address())
 
     def serializers(self):
-        return self.results
+        return extractor.get_burning_portfolio(self.results.value_serialized)
 
     def is_success(self):
         return True
