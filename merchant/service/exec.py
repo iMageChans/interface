@@ -33,9 +33,9 @@ class Exec(D9Contract):
     def give_points_usdt(self, consumer_id: str, amount: int) -> ContractExecutionReceipt:
         params = {
             "consumer_id": consumer_id,
-            "usdt_amount": amount
+            "usdt_payment": amount
         }
-        return self.contract_exec('give_green_points_usdt', params, value=amount)
+        return self.contract_exec('give_green_points_usdt', params)
 
     def send_usdt_payment_to_merchant(self, merchant_id: str, amount: int) -> ContractExecutionReceipt:
         params = {

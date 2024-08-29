@@ -13,8 +13,11 @@ class GivePointsUSDT(BaseActionsExec):
         self.results = Exec(self.keypair).give_points_usdt(self.consumer_id.get_valid_address(),
                                                            to_usdt(validated_data['amount']))
 
-        usdt_balance = update_or_create_usdt_balance_celery.delay(self.account_id.mate_data_address(),
-                                                                  self.keypair.private_key.hex())
-        user_merchant_profile = update_or_created_get_user_merchant_profile_celery.delay(
-            self.consumer_id.mate_data_address(),
-            self.keypair.private_key.hex())
+    def is_success(self):
+        if self.results.is_success:
+            usdt_balance = update_or_create_usdt_balance_celery.delay(self.account_id.mate_data_address(),
+                                                                      self.keypair.private_key.hex())
+            user_consumer_balance = update_or_created_get_user_merchant_profile_celery.delay(
+                self.consumer_id.mate_data_address(),
+                self.keypair.private_key.hex())
+        return self.results.is_success
