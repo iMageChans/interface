@@ -25,7 +25,7 @@ class D9Contract:
             contract_address=contract_address,
             metadata_file=metadata_file,
             substrate=D9Interface(
-                url=TEST_NET_URL,
+                url=MAIN_NET_URL,
                 cache_region=region,
                 auto_discover=True,
                 auto_reconnect=True,
