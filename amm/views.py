@@ -51,3 +51,7 @@ class GetD9View(BaseView):
 class GetUSDTView(BaseView):
     serializer_class = serializers.GetUSDTSerializer
     action_class = actions.GetUSDT
+
+class GetTotalLpTokensView(BaseView):
+    serializer_class = serializers.GetTotalLpTokensSerializer
+    action_class = actions.GetTotalLpTokens

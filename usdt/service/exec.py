@@ -56,55 +56,55 @@ class Exec(D9Contract):
     def node_reward_allowance(self, amount: int):
         params = {
             "spender": config.NODE_REWARD_CONTRACT,
-            "delta_value": amount
+            "value": amount
         }
-        return self.contract_exec('PSP22::increase_allowance', params)
+        return self.contract_exec('PSP22::approve', params)
 
     def burn_mining_allowance(self, amount: int):
         params = {
             "spender": config.BURN_MINING_CONTRACT,
-            "delta_value": amount
+            "value": amount
         }
-        return self.contract_exec('PSP22::increase_allowance', params)
+        return self.contract_exec('PSP22::approve', params)
 
     def main_mining_allowance(self, amount: int):
         params = {
             "spender": config.MAIN_MINING_CONTRACT,
-            "delta_value": amount
+            "value": amount
         }
-        return self.contract_exec('PSP22::increase_allowance', params)
+        return self.contract_exec('PSP22::approve', params)
 
     def mining_allowance(self, amount: int):
         params = {
             "spender": config.NEW_MINING_CONTRACT,
-            "delta_value": amount
+            "value": amount
         }
-        return self.contract_exec('PSP22::increase_allowance', params)
+        return self.contract_exec('PSP22::approve', params)
 
     def market_maker_allowance(self, amount: int):
         params = {
             "spender": config.MARKET_MAKER_CONTRACT,
-            "delta_value": amount
+            "value": amount
         }
-        return self.contract_exec('PSP22::increase_allowance', params)
+        return self.contract_exec('PSP22::approve', params)
 
     def usdt_allowance(self, amount: int):
         params = {
             "spender": config.USDT_CONTRACT,
-            "delta_value": amount
+            "value": amount
         }
-        return self.contract_exec('PSP22::increase_allowance', params)
+        return self.contract_exec('PSP22::approve', params)
 
     def merchant_allowance(self, amount: int):
         params = {
             "spender": config.MERCHANT_CONTRACT,
-            "delta_value": amount
+            "value": amount
         }
-        return self.contract_exec('PSP22::increase_allowance', params)
+        return self.contract_exec('PSP22::approve', params)
 
     def cross_chain_allowance(self, amount: int):
         params = {
             "spender": config.CROSS_CHAIN_CONTRACT,
-            "delta_value": amount
+            "value": amount
         }
-        return self.contract_exec('PSP22::increase_allowance', params)
+        return self.contract_exec('PSP22::approve', params)

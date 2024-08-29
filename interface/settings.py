@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     "rest_framework",
     'corsheaders',
     'drf_yasg',
+    'snowflake',
     "amm.apps.AmmConfig",
     "balances.apps.BalancesConfig",
     "users_profile.apps.UsersProfileConfig",
@@ -57,7 +58,8 @@ INSTALLED_APPS = [
     "mining.apps.MiningConfig",
     "votings.apps.VotingsConfig",
     "node_reward.apps.NodeRewardConfig",
-    "referrals.apps.ReferralsConfig"
+    "referrals.apps.ReferralsConfig",
+    "record.apps.RecordConfig"
 ]
 
 MIDDLEWARE = [
@@ -172,3 +174,7 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+SF_START_TIME = 1724497063000
+
+SF_WORKER_ID = 1

@@ -3,10 +3,10 @@ from amm.service.read import Read
 from utils.JSONExtractor import extractor
 
 
-class GetLiquidityProvider(BaseActionsRead):
+class GetTotalLpTokens(BaseActionsRead):
     def __init__(self, validated_data):
         super().__init__(validated_data)
-        self.results = Read(self.keypair).get_liquidity_provider(self.account_id.get_valid_address())
+        self.results = Read(self.keypair).get_total_lp_tokens()
 
     def serializers(self):
         return extractor.get_data_or_err(self.results.value_serialized)

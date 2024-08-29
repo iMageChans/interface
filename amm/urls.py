@@ -12,4 +12,5 @@ urlpatterns = [
     path('remove/liquidity/', RemoveLiquidityView.as_view(), name='remove-liquidity'),
     path('get/d9/', GetD9View.as_view(), name='get-d9'),
     path('get/usdt/', GetUSDTView.as_view(), name='get-usdt'),
+    path('get/total/lp/tokens/', GetTotalLpTokensView.as_view(), name='get-total-lp-tokens'),
 ]

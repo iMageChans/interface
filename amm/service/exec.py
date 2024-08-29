@@ -1,3 +1,4 @@
+from ecdsa.test_malformed_sigs import params
 from substrateinterface.contracts import ContractExecutionReceipt
 
 from base.d9_contracts import D9Contract

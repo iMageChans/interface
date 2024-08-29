@@ -17,6 +17,7 @@ class Transfer(BaseActionsExec):
                                     amount=amount)
 
         nonce = balance.d9_interface.get_account_nonce(account_address=self.account_id.get_valid_address())
+        self.payment_info = balance.d9_interface.get_payment_info(call=transfer, keypair=self.keypair)
         self.extrinsic = balance.d9_interface.create_signed_extrinsic(call=transfer,
                                                                       keypair=self.keypair,
                                                                       nonce=nonce)
@@ -25,7 +26,8 @@ class Transfer(BaseActionsExec):
                                                              wait_for_inclusion=True)
 
     def serializers(self):
-        return extractor.get_transfer_data(self.results)
+        return self.payment_info
+        # return extractor.get_transfer_data(self.results)
 
     def is_success(self):
         if self.results.is_success:

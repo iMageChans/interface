@@ -15,7 +15,10 @@ class Read(D9Contract):
             keypair=keypair
         )
 
-    def get_reserves(self):
+    def get_total_lp_tokens(self) -> GenericContractExecResult:
+        return self.contract_read('get_total_lp_tokens')
+
+    def get_reserves(self) -> GenericContractExecResult:
         return self.contract_read('get_currency_reserves')
 
     def get_liquidity_provider(self, account_id: str) -> GenericContractExecResult:
@@ -24,7 +27,7 @@ class Read(D9Contract):
         }
         return self.contract_read('get_liquidity_provider', params)
 
-    def check_new_liquidity(self, usdt_liquidity: int, d9_liquidity: int)  -> GenericContractExecResult:
+    def check_new_liquidity(self, usdt_liquidity: int, d9_liquidity: int) -> GenericContractExecResult:
         params = {
             "usdt_liquidity": usdt_liquidity,
             "d9_liquidity": d9_liquidity
@@ -51,3 +54,21 @@ class Read(D9Contract):
             "amount": usdt_amount
         }
         return self.contract_read('check_usdt_balance', params)
+
+    def get_d9(self, usdt: int) -> GenericContractExecResult:
+        params = {
+            "usdt": usdt
+        }
+        return self.contract_read('get_d9', params)
+
+    def get_usdt(self, d9_amount: int) -> GenericContractExecResult:
+        return self.contract_read('get_usdt', value=d9_amount)
+
+    def add_liquidity(self, usdt_amount: int, d9_amount: int) -> GenericContractExecResult:
+        params = {
+            "usdt_liquidity": usdt_amount,
+        }
+        return self.contract_read('add_liquidity', params, value=d9_amount)
+
+    def remove_liquidity(self) -> GenericContractExecResult:
+        return self.contract_read('remove_liquidity')

@@ -8,3 +8,4 @@ from amm.actions.add_liquidity import AddLiquidity
 from amm.actions.remove_liquidity import RemoveLiquidity
 from amm.actions.get_d9 import GetD9
 from amm.actions.get_usdt import GetUSDT
+from amm.actions.get_total_lp_tokens import GetTotalLpTokens

@@ -45,6 +45,8 @@ class JSONExtractor:
         return value
 
     def d9_to_usdt(self, data):
+        if data is None:
+            return None
         keys = ['d9', 'usdt']
         value = self.extract_last_ok(data)
         if self.checks:
@@ -52,6 +54,8 @@ class JSONExtractor:
         return value
 
     def usdt_to_d9(self, data):
+        if data is None:
+            return None
         keys = ['usdt', 'd9']
         value = self.extract_last_ok(data)
         if self.checks:
@@ -80,7 +84,8 @@ class JSONExtractor:
 
         return {
             "block_hash": data.block_hash,
-            "extrinsic_hash": data.extrinsic_hash
+            "extrinsic_hash": data.extrinsic_hash,
+            "total_fee_amount": numbers.DecimalTruncation(7).format_d9(data.total_fee_amount),
         }
 
     def get_burning_portfolio(self, data):

@@ -35,6 +35,3 @@ def update_or_created_currency_profile():
             print("Failed to retrieve USDT prices")
     else:
         print("No supported currencies available")
-
-
-update_or_created_currency_profile()

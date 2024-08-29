@@ -58,8 +58,8 @@ class CheckUSDTBalanceSerializer(serializers.Serializer):
 
 class AddLiquiditySerializer(serializers.Serializer):
     keypair = serializers.CharField(required=True)
-    usdt_amount = serializers.CharField(required=True)
-    d9_amount = serializers.CharField(required=True)
+    usdt_amount = serializers.IntegerField(required=True)
+    d9_amount = serializers.IntegerField(required=True)
 
 
 class RemoveLiquiditySerializer(serializers.Serializer):
@@ -74,3 +74,7 @@ class GetD9Serializer(serializers.Serializer):
 class GetUSDTSerializer(serializers.Serializer):
     keypair = serializers.CharField(required=True)
     amount = serializers.IntegerField(required=True)
+
+
+class GetTotalLpTokensSerializer(serializers.Serializer):
+    keypair = serializers.CharField(required=True)
