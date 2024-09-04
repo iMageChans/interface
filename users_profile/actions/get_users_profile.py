@@ -26,6 +26,7 @@ class GetUsersProfile(BaseActionsRead):
         self.results.update(MerchantExpirySerializer(merchant_expiry).data)
         self.results.update({"merchant_profile": UserMerchantProfileSerializer(user_merchant_profile).data})
 
+
     def serializers(self):
         return self.results
 
