@@ -29,7 +29,7 @@ class D9Contract:
             metadata_file=metadata_file,
             substrate=D9Interface(
                 # url="https://mainnet.d9network.com:40200",
-                url=TEST_NET_URL,
+                url=RPC_MAIN_NET_URL,
                 cache_region=region,
                 auto_discover=True,
                 auto_reconnect=True,

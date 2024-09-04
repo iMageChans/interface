@@ -48,20 +48,20 @@ class TotalVolumeSerializer(serializers.ModelSerializer):
 
 
 class GetAccumulativeRewardPoolSerializer(serializers.Serializer):
-    keypair = serializers.CharField(required=True)
+    keypair = serializers.CharField(required=True, write_only=True)
 
 
 class GetMerchantVolumeSerializer(serializers.Serializer):
-    keypair = serializers.CharField(required=True)
+    keypair = serializers.CharField(required=True, write_only=True)
 
 
 class GetSessionVolumeSerializer(serializers.Serializer):
-    keypair = serializers.CharField(required=True)
+    keypair = serializers.CharField(required=True, write_only=True)
     session_index = serializers.IntegerField(required=True)
 
 
 class GetTotalVolumeSerializer(serializers.Serializer):
-    keypair = serializers.CharField(required=True)
+    keypair = serializers.CharField(required=True, write_only=True)
 
 
 class GetAllVolumeSerializer(serializers.Serializer):

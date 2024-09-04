@@ -3,7 +3,7 @@ from main_mining import models
 
 
 class BurningSerializer(serializers.Serializer):
-    keypair = serializers.CharField(required=True)
+    keypair = serializers.CharField(required=True, write_only=True)
     account_id = serializers.CharField(required=False)
     amount = serializers.IntegerField(required=True)
 
@@ -14,7 +14,7 @@ class BurningSerializer(serializers.Serializer):
 
 
 class BurningWithdrawSerializer(serializers.Serializer):
-    keypair = serializers.CharField(required=True)
+    keypair = serializers.CharField(required=True, write_only=True)
 
 
 class TotalBurnedSerializer(serializers.ModelSerializer):
@@ -24,13 +24,13 @@ class TotalBurnedSerializer(serializers.ModelSerializer):
 
 
 class GetTotalBurnedSerializer(serializers.Serializer):
-    keypair = serializers.CharField(required=True)
+    keypair = serializers.CharField(required=True, write_only=True)
 
 
 class GetBurnUserPortfolioSerializer(serializers.Serializer):
-    keypair = serializers.CharField(required=True)
+    keypair = serializers.CharField(required=True, write_only=True)
     account_id = serializers.CharField(required=False)
 
 
 class GetReturnPercentSerializer(serializers.Serializer):
-    keypair = serializers.CharField(required=True)
+    keypair = serializers.CharField(required=True, write_only=True)

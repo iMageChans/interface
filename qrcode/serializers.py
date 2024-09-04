@@ -2,7 +2,7 @@ from rest_framework import serializers
 
 
 class GenerateQRCodeSerializer(serializers.Serializer):
-    keypair = serializers.CharField(required=True)
+    keypair = serializers.CharField(required=True, write_only=True)
     amount = serializers.IntegerField(required=True)
     type = serializers.CharField(required=True)
 

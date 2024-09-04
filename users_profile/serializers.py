@@ -4,7 +4,7 @@ from users_profile.models import UserBalances, USDTBalances, UserBurningProfile,
 
 
 class GetUserToNodeVoteSerializer(serializers.Serializer):
-    keypair = serializers.CharField(required=True)
+    keypair = serializers.CharField(required=True, write_only=True)
     account_id = serializers.CharField(required=True)
 
 
@@ -45,4 +45,4 @@ class USDTBalancesSerializer(serializers.ModelSerializer):
 
 
 class UsersProfileSerializer(serializers.Serializer):
-    keypair = serializers.CharField(required=True)
+    keypair = serializers.CharField(required=True, write_only=True)
