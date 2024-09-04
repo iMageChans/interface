@@ -12,8 +12,9 @@ from record import models
 class RemoveLiquidity(BaseActionsExec):
     def __init__(self, validated_data):
         super().__init__(validated_data)
+        percent = validated_data['percent']
         self.exec =  Exec(self.keypair)
-        self.results = self.exec.remove_liquidity()
+        self.results = self.exec.remove_liquidity(percent=percent)
 
 
     def serializers(self):
