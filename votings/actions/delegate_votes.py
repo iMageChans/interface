@@ -25,7 +25,6 @@ class DelegateVotes(BaseActionsExec):
         self.results = voting.d9_interface.submit_extrinsic(self.extrinsic,
                                                             wait_for_inclusion=True)
 
-    def is_success(self):
         if self.results.is_success:
             node_metadata = Read().get_node_metadata(node_id=self.candidate.get_valid_address())
             node_to_user_vote = Read().node_to_user_vote_totals(node_id=self.candidate.get_valid_address())
@@ -42,4 +41,3 @@ class DelegateVotes(BaseActionsExec):
                     node_id=data["node_id"],
                     defaults=data
                 )
-        return self.results.is_success
