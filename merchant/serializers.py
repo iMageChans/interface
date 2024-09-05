@@ -35,10 +35,10 @@ class GivePointsUSDTSerializer(serializers.Serializer):
 class USDTPaymentSerializer(serializers.Serializer):
     keypair = serializers.CharField(required=True, write_only=True)
     merchant_id = serializers.CharField(required=True)
-    amount = serializers.IntegerField(required=True)
+    amount = serializers.FloatField(required=True)
 
 
 class D9PaymentSerializer(serializers.Serializer):
     keypair = serializers.CharField(required=True, write_only=True)
     merchant_id = serializers.CharField(required=True)
-    amount = serializers.IntegerField(required=True)
+    amount = serializers.FloatField(required=True)
