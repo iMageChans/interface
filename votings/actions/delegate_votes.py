@@ -30,7 +30,7 @@ class DelegateVotes(BaseActionsExec):
             node_to_user_vote = Read().node_to_user_vote_totals(node_id=self.candidate.get_valid_address())
             for user in node_to_user_vote:
                 data = {
-                    "node_id": "Dn" + self.candidate.mate_data_address(),
+                    "node_id": self.candidate.mate_data_address(),
                     "node_name": node_metadata['name'],
                     "account_id": f"Dn{user[0]}",
                     "vote": user[1]

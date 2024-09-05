@@ -23,8 +23,9 @@ class TryRemoveVotesFromCandidate(BaseActionsExec):
             node_metadata = Read().get_node_metadata(node_id=self.node_id.get_valid_address())
             node_to_user_vote = Read().node_to_user_vote_totals(node_id=self.node_id.get_valid_address())
             for user in node_to_user_vote:
+                print( f"Dn{user[0]}",  f"vote:{user[1]}")
                 data = {
-                    "node_id": "Dn" + self.node_id.mate_data_address(),
+                    "node_id": self.node_id.mate_data_address(),
                     "node_name": node_metadata['name'],
                     "account_id": f"Dn{user[0]}",
                     "vote": user[1]
