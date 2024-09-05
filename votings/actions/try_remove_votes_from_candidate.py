@@ -19,23 +19,39 @@ class TryRemoveVotesFromCandidate(BaseActionsExec):
         self.results = voting.d9_interface.submit_extrinsic(self.extrinsic,
                                                             wait_for_inclusion=True)
 
+        node_metadata = Read().get_node_metadata(node_id=self.node_id.get_valid_address())
+        node_to_user_vote = Read().node_to_user_vote_totals(node_id=self.node_id.get_valid_address())
+        for user in node_to_user_vote:
+            data = {
+                "node_id": "Dn" + self.node_id.mate_data_address(),
+                "node_name": node_metadata['name'],
+                "account_id": f"Dn{user[0]}",
+                "vote": user[1]
+            }
+
+            UserToNodeVote.objects.update_or_create(
+                account_id=data["account_id"],
+                node_id=data["node_id"],
+                defaults=data
+            )
+
 
 
     def is_success(self):
-        if self.results.is_success:
-            node_metadata = Read().get_node_metadata(node_id=self.node_id.get_valid_address())
-            node_to_user_vote = Read().node_to_user_vote_totals(node_id=self.node_id.get_valid_address())
-            for user in node_to_user_vote:
-                data = {
-                    "node_id": "Dn" + self.node_id.mate_data_address(),
-                    "node_name": node_metadata['name'],
-                    "account_id": f"Dn{user[0]}",
-                    "vote": user[1]
-                }
-
-                UserToNodeVote.objects.update_or_create(
-                    account_id=data["account_id"],
-                    node_id=data["node_id"],
-                    defaults=data
-                )
+        # if self.results.is_success:
+        #     node_metadata = Read().get_node_metadata(node_id=self.node_id.get_valid_address())
+        #     node_to_user_vote = Read().node_to_user_vote_totals(node_id=self.node_id.get_valid_address())
+        #     for user in node_to_user_vote:
+        #         data = {
+        #             "node_id": "Dn" + self.node_id.mate_data_address(),
+        #             "node_name": node_metadata['name'],
+        #             "account_id": f"Dn{user[0]}",
+        #             "vote": user[1]
+        #         }
+        #
+        #         UserToNodeVote.objects.update_or_create(
+        #             account_id=data["account_id"],
+        #             node_id=data["node_id"],
+        #             defaults=data
+        #         )
         return self.results.is_success
