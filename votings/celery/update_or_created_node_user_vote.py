@@ -18,8 +18,10 @@ def update_or_created_node_user_vote():
                 "vote": user[1]
             }
 
-            UserToNodeVote.objects.update_or_create(
+            user_to_node, create = UserToNodeVote.objects.update_or_create(
                 account_id=data["account_id"],
                 node_id=data["node_id"],
                 defaults=data
             )
+
+            user_to_node.save()

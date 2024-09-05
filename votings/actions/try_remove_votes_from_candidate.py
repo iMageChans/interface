@@ -1,5 +1,6 @@
 from base.actions import BaseActionsExec
 from users_profile.models import UserToNodeVote
+from users_profile.serializers import UserToNodeVoteSerializer
 from votings.service.exec import Exec
 from votings.service.read import Read
 from utils.keystone import ValidAddress
@@ -23,7 +24,7 @@ class TryRemoveVotesFromCandidate(BaseActionsExec):
             node_metadata = Read().get_node_metadata(node_id=self.node_id.get_valid_address())
             node_to_user_vote = Read().node_to_user_vote_totals(node_id=self.node_id.get_valid_address())
             for user in node_to_user_vote:
-                print( f"Dn{user[0]}",  f"vote:{user[1]}")
+
                 data = {
                     "node_id": self.node_id.mate_data_address(),
                     "node_name": node_metadata['name'],
@@ -31,8 +32,9 @@ class TryRemoveVotesFromCandidate(BaseActionsExec):
                     "vote": user[1]
                 }
 
-                UserToNodeVote.objects.update_or_create(
+                user_to_node, create = UserToNodeVote.objects.update_or_create(
                     account_id=data["account_id"],
                     node_id=data["node_id"],
                     defaults=data
                 )
+                user_to_node.save()
