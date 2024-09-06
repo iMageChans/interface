@@ -31,7 +31,6 @@ class D9Contract:
                 url=MAIN_NET_URL,
                 # websocket=MAIN_NET_URL,
                 cache_region=region,
-                auto_discover=True,
                 auto_reconnect=True,
             ),
         )

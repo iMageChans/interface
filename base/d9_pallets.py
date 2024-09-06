@@ -22,7 +22,6 @@ class D9PalletsExec:
             # websocket=MAIN_NET_URL,
             type_registry_preset='polkadot',
             cache_region=region,
-            auto_discover=True,
             auto_reconnect=True,
         )
 
