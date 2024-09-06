@@ -28,9 +28,8 @@ class D9Contract:
             contract_address=contract_address,
             metadata_file=metadata_file,
             substrate=D9Interface(
-                # url="https://mainnet.d9network.com:40200",
+                url=RPC_MAIN_NET_URL,
                 websocket=MAIN_NET_URL,
-                ss58_format=9,
                 cache_region=region,
                 auto_discover=True,
                 auto_reconnect=True,

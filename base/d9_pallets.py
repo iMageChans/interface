@@ -18,8 +18,8 @@ region = make_region().configure(
 class D9PalletsExec:
     def __init__(self, pallet_name: str):
         self.d9_interface = D9Interface(
+            url=RPC_MAIN_NET_URL,
             websocket=MAIN_NET_URL,
-            ss58_format=9,
             type_registry_preset='polkadot',
             cache_region=region,
             auto_discover=True,
