@@ -18,7 +18,7 @@ region = make_region().configure(
 class D9PalletsExec:
     def __init__(self, pallet_name: str):
         self.d9_interface = D9Interface(
-            url=MAIN_NET_URL,
+            url=PYTHON_MAIN_NET_URL,
             ss58_format=9,
             type_registry_preset='polkadot',
             cache_region=region,
@@ -38,7 +38,7 @@ class D9PalletsExec:
 class D9PalletsRead:
     def __init__(self, pallet_name: str):
         self.d9_interface = D9Interface(
-            url=MAIN_NET_URL,
+            url=PYTHON_MAIN_NET_URL,
             ss58_format=9,
             type_registry_preset='polkadot',
             cache_region=region,
