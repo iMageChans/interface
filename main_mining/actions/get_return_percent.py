@@ -11,7 +11,7 @@ class GetReturnPercent(BaseActionsRead):
 
     def serializers(self):
         values = numbers.DecimalTruncation(0).format_d9(self.results)
-        return numbers.get_return_percent(values)
+        return numbers.get_return_percent(float(values))
 
     def is_success(self):
         return True
