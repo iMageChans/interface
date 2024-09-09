@@ -94,4 +94,5 @@ class CurrencyProfileSerializer(serializers.ModelSerializer):
 
 class GetAllowanceSerializer(serializers.Serializer):
     keypair = serializers.CharField(required=True, write_only=True)
-    account_id = serializers.CharField(required=True)
+    from_address = serializers.CharField(required=True)
+    to_address = serializers.CharField(required=True)
