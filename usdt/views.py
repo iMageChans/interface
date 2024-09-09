@@ -83,5 +83,5 @@ class PriceRateView(BaseView):
     action_class = actions.PriceRate
 
 class GetAllowanceView(BaseView):
-    serializer_class = serializers.ApproveSerializer
+    serializer_class = serializers.GetAllowanceSerializer
     action_class = actions.GetAllowance
