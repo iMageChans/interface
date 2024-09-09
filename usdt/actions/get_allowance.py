@@ -1,5 +1,7 @@
 from base.actions import BaseActionsRead
 from usdt.service.read import Read
+from utils import numbers
+from utils.JSONExtractor import extractor
 from utils.keystone import ValidAddress
 
 
@@ -12,7 +14,7 @@ class GetAllowance(BaseActionsRead):
         self.results = usdt_read.get_allowance(owner=from_address.get_valid_address(), spender=to_address.get_valid_address())
 
     def serializers(self):
-        return self.results.value_serialized
+        return int(extractor.get_data_or_err(self.results.value_serialized)) / 100
 
     def is_success(self):
         return True
