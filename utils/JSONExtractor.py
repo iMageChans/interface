@@ -143,8 +143,8 @@ class JSONExtractor:
         else:
             return {
                 "green_points": 0,
-                # "relationship_factors": list(res['relationship_factors']),
-                "red_points": 0,
+                "relationship_green_points": 0,
+                "relationship_red_points": 0,
                 "last_conversion": 0,
                 "redeemed_usdt": 0,
                 "redeemed_d9": 0,
