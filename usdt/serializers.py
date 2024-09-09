@@ -90,3 +90,8 @@ class CurrencyProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = CurrencyProfile
         fields = '__all__'
+
+
+class GetAllowanceSerializer(serializers.Serializer):
+    keypair = serializers.CharField(required=True, write_only=True)
+    account_id = serializers.CharField(required=True)

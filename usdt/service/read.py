@@ -20,3 +20,6 @@ class Read(D9Contract):
 
     def total_supply(self) -> GenericContractExecResult:
         return self.contract_read('PSP22::total_supply')
+
+    def get_allowance(self, owner: str) -> GenericContractExecResult:
+        return self.contract_read('PSP22::allowance', {'owner': owner, 'spender': owner})

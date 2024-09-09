@@ -14,3 +14,4 @@ from usdt.actions.usdt_allowance import USDTAllowance
 from usdt.actions.merchant_allowance import MerchantAllowance
 from usdt.actions.cross_chain_allowance import CrossChainAllowance
 from usdt.actions.price_rate import PriceRate
+from usdt.actions.get_allowance import GetAllowance
