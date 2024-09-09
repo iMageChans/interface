@@ -2,7 +2,7 @@ services:
   db:
     image: postgres:15
     env_file:
-      - .env
+      - /www/interface/.env
     environment:
       POSTGRES_DB: ${DATABASE_NAME}
       POSTGRES_USER: ${DATABASE_USER}
@@ -29,7 +29,7 @@ services:
       - db
       - redis
     env_file:
-      - .env
+      - /www/interface/.env
     environment:
       DATABASE_URL: postgres://${DATABASE_USER}:${DATABASE_PASSWORD}@${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_NAME}
       CELERY_BROKER_URL: redis://redis:6379/0
@@ -45,7 +45,7 @@ services:
       - db
       - redis
     env_file:
-      - .env
+      - /www/interface/.env
     environment:
       DATABASE_URL: postgres://${DATABASE_USER}:${DATABASE_PASSWORD}@${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_NAME}
       CELERY_BROKER_URL: redis://redis:6379/0
@@ -60,7 +60,7 @@ services:
       - db
       - redis
     env_file:
-      - .env
+      - /www/interface/.env
     environment:
       DATABASE_URL: postgres://${DATABASE_USER}:${DATABASE_PASSWORD}@${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_NAME}
       CELERY_BROKER_URL: redis://redis:6379/0
