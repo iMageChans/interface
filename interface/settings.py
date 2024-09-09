@@ -26,21 +26,21 @@ SECRET_KEY = 'django-insecure-ym)_ow^&+-#g6k@i-of6zx^_rg^0+f*20ymw!j+4jy^kdmelo1
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
+#
+# CORS_ALLOWED_ORIGINS = [
+#     'http://localhost:5173',
+#     'https://d9-test-server.q6z4kzhr.uk',
+# ]
+#
+# CORS_ALLOW_CREDENTIALS = True
+#
+# CSRF_TRUSTED_ORIGINS = [
+#     'http://localhost:5173',
+#     'https://d9-test-server.q6z4kzhr.uk',
+# ]
 
-CORS_ALLOWED_ORIGINS = [
-    'http://localhost:5173',
-    'https://d9-test-server.q6z4kzhr.uk',
-]
 
-CORS_ALLOW_CREDENTIALS = True
-
-CSRF_TRUSTED_ORIGINS = [
-    'http://localhost:5173',
-    'https://d9-test-server.q6z4kzhr.uk',
-]
-
-
-# CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_ALL_ORIGINS = True
 
 
 # Application definition
