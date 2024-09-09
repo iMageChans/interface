@@ -28,8 +28,7 @@ class D9Contract:
             contract_address=contract_address,
             metadata_file=metadata_file,
             substrate=D9Interface(
-                url=MAIN_NET_URL,
-                ss58_format=9,
+                url=PYTHON_MAIN_NET_URL,
                 type_registry_preset='polkadot',
                 cache_region=region,
                 auto_reconnect=True,
