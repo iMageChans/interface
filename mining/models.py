@@ -3,7 +3,7 @@ from django.utils import timezone
 
 
 class AccumulativeRewardPool(models.Model):
-    totals = models.CharField(max_length=255)
+    totals = models.CharField(max_length=255, default="0", blank=True, null=True)
     created_at = models.DateTimeField(default=timezone.now, editable=False)
 
     def __str__(self):
@@ -11,7 +11,7 @@ class AccumulativeRewardPool(models.Model):
 
 
 class MerchantVolume(models.Model):
-    totals = models.CharField(max_length=255)
+    totals = models.CharField(max_length=255, default="0", blank=True, null=True)
     created_at = models.DateTimeField(default=timezone.now, editable=False)
 
     def __str__(self):
@@ -19,7 +19,7 @@ class MerchantVolume(models.Model):
 
 
 class SessionVolume(models.Model):
-    totals = models.CharField(max_length=255)
+    totals = models.CharField(max_length=255, default="0", blank=True, null=True)
     created_at = models.DateTimeField(default=timezone.now, editable=False)
 
     def __str__(self):
@@ -27,7 +27,7 @@ class SessionVolume(models.Model):
 
 
 class TotalVolume(models.Model):
-    totals = models.CharField(max_length=255)
+    totals = models.CharField(max_length=255, default="0", blank=True, null=True)
     created_at = models.DateTimeField(default=timezone.now, editable=False)
 
     def __str__(self):
