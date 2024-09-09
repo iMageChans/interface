@@ -17,7 +17,8 @@ services:
 
   web:
     build: .
-    command: ["/entrypoint.sh", "python", "manage.py", "runserver", "0.0.0.0:8000"]
+#    command: ["/entrypoint.sh", "python", "manage.py", "runserver", "0.0.0.0:8000"]
+    command: ["/entrypoint.sh", "uvicorn", "interface.asgi:application", "--host", "0.0.0.0", "--port", "8000"]
     volumes:
       - .:/app
     ports:
