@@ -1,5 +1,5 @@
 MAIN_NET_URL = "wss://mainnet.d9network.com:40300"
-PYTHON_MAIN_NET_URL = "ws://3.87.4.36:40300"
+PYTHON_MAIN_NET_URL = "ws://44.211.76.25:40300"
 RPC_MAIN_NET_URL = "https://mainnet.d9network.com:40200"
 TEST_NET_URL = "wss://tester.d9network.org:40300"
 
