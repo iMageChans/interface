@@ -118,13 +118,32 @@ WSGI_APPLICATION = 'interface.wsgi.application'
 #     }
 # }
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': env('DATABASE_NAME'),
+#         'USER': env('DATABASE_USER'),
+#         'PASSWORD': env('DATABASE_PASSWORD'),
+#         'HOST': env('DATABASE_HOST'),
+#         'PORT': env('DATABASE_PORT', default='5432'),
+#     }
+# }
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': env('DATABASE_NAME'),
         'USER': env('DATABASE_USER'),
         'PASSWORD': env('DATABASE_PASSWORD'),
-        'HOST': env('DATABASE_HOST'),
+        'HOST': env('WRITE_DATABASE_HOST'),
+        'PORT': env('DATABASE_PORT', default='5432'),
+    },
+    'replica': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': env('DATABASE_NAME'),
+        'USER': env('DATABASE_USER'),
+        'PASSWORD': env('DATABASE_PASSWORD'),
+        'HOST': env('READ_DATABASE_HOST'),
         'PORT': env('DATABASE_PORT', default='5432'),
     }
 }
@@ -191,3 +210,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 SF_START_TIME = 1724497063000
 
 SF_WORKER_ID = 1
+
+DATABASE_ROUTERS = ['interface.routers.db_router.DBRouter']
+
