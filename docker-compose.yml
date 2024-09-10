@@ -23,6 +23,7 @@ services:
     command: ["/entrypoint.sh", "uvicorn", "interface.asgi:application", "--host", "0.0.0.0", "--port", "8000"]
     volumes:
       - .:/app
+      - ./staticfiles:/app/staticfiles
     ports:
       - "8000:8000"
     depends_on:
