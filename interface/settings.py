@@ -213,3 +213,8 @@ SF_WORKER_ID = 1
 
 DATABASE_ROUTERS = ['interface.routers.db_router.DBRouter']
 
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+SECURE_SSL_REDIRECT = False
+
+

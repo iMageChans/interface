@@ -1,42 +1,61 @@
+# 处理 HTTP 重定向到 HTTPS
 server {
-	listen 80;
-	server_name ap-east-hk-1.d9-dcip-service.com;
+    listen 80;
+    server_name ap-east-hk-1.d9-dcip-service.com;
 
-	location /.well-known/acme-challenge/ {
-		root /var/www/certbot;
-	}
+    # 处理 Let's Encrypt 证书的自动验证
+    location /.well-known/acme-challenge/ {
+        root /var/www/certbot;
+    }
 
-	location / {
-		return 301 https://$host$request_uri;
-	}
+    # 将所有 HTTP 请求重定向到 HTTPS
+    location / {
+        return 301 https://$host$request_uri;
+    }
 }
 
+# 处理 HTTPS 请求
 server {
-	listen 443 ssl;
-	server_name ap-east-hk-1.d9-dcip-service.com;
+    listen 443 ssl;
+    server_name ap-east-hk-1.d9-dcip-service.com;
 
-	ssl_certificate /etc/letsencrypt/live/ap-east-hk-1.d9-dcip-service.com/fullchain.pem;
-	ssl_certificate_key /etc/letsencrypt/live/ap-east-hk-1.d9-dcip-service.com/privkey.pem;
+    # SSL 证书文件路径
+    ssl_certificate /etc/letsencrypt/live/ap-east-hk-1.d9-dcip-service.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/ap-east-hk-1.d9-dcip-service.com/privkey.pem;
 
-	ssl_protocols TLSv1.2 TLSv1.3;
-	ssl_prefer_server_ciphers on;
-	ssl_ciphers "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH";
-	ssl_ecdh_curve secp384r1;
-	ssl_session_cache shared:SSL:10m;
-	ssl_session_timeout 10m;
-	ssl_stapling on;
-	ssl_stapling_verify on;
-	resolver 8.8.8.8 8.8.4.4 valid=300s;
-	resolver_timeout 5s;
-	add_header Strict-Transport-Security "max-age=63072000; includeSubDomains; preload";
-	add_header X-Frame-Options DENY;
-	add_header X-Content-Type-Options nosniff;
+    # SSL 配置
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_prefer_server_ciphers on;
+    ssl_ciphers "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH";
+    ssl_ecdh_curve secp384r1;
+    ssl_session_cache shared:SSL:10m;
+    ssl_session_timeout 10m;
+    ssl_stapling on;
+    ssl_stapling_verify on;
+    resolver 8.8.8.8 8.8.4.4 valid=300s;
+    resolver_timeout 5s;
 
-	location / {
-		proxy_pass http://localhost:8000;
-		proxy_set_header Host $host;
-		proxy_set_header X-Real-IP $remote_addr;
-		proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-		proxy_set_header X-Forwarded-Proto $scheme;
-	}
+    # 安全头部配置
+    add_header Strict-Transport-Security "max-age=63072000; includeSubDomains; preload";
+    add_header X-Frame-Options DENY;
+    add_header X-Content-Type-Options nosniff;
+
+    # 处理静态文件（如果 Django 使用 collectstatic 将文件收集到 /var/www/static/）
+    location /static/ {
+        alias /var/www/static/;  # 确保这里是你的静态文件目录
+    }
+
+    # 处理媒体文件
+    location /media/ {
+        alias /var/www/media/;  # 确保这里是你的媒体文件目录
+    }
+
+    # 反向代理到 Django 应用程序（Gunicorn/Uvicorn 运行在 localhost:8000）
+    location / {
+        proxy_pass http://localhost:8000;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
 }
