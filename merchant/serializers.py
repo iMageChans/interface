@@ -23,13 +23,13 @@ class RedeemD9Serializer(serializers.Serializer):
 class GivePointsD9Serializer(serializers.Serializer):
     keypair = serializers.CharField(required=True, write_only=True)
     consumer_id = serializers.CharField(required=True)
-    amount = serializers.IntegerField(required=True)
+    amount = serializers.FloatField(required=True)
 
 
 class GivePointsUSDTSerializer(serializers.Serializer):
     keypair = serializers.CharField(required=True, write_only=True)
     consumer_id = serializers.CharField(required=True)
-    amount = serializers.IntegerField(required=True)
+    amount = serializers.FloatField(required=True)
 
 
 class USDTPaymentSerializer(serializers.Serializer):
