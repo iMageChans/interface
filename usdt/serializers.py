@@ -25,8 +25,8 @@ class DecreaseAllowanceSerializer(serializers.Serializer):
 
 class IncreaseAllowanceSerializer(serializers.Serializer):
     keypair = serializers.CharField(required=True, write_only=True)
-    account_id = serializers.CharField(required=True)
-    amount = serializers.IntegerField(required=True)
+    to_address = serializers.CharField(required=True)
+    amount = serializers.FloatField(required=True)
 
 
 class NodeRewardAllowanceSerializer(serializers.Serializer):

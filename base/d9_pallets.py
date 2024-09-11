@@ -22,7 +22,6 @@ class D9PalletsExec:
             ss58_format=9,
             type_registry_preset='polkadot',
             cache_region=region,
-            auto_reconnect=True,
         )
 
         self.pallet_name = pallet_name
@@ -42,7 +41,6 @@ class D9PalletsRead:
             ss58_format=9,
             type_registry_preset='polkadot',
             cache_region=region,
-            auto_reconnect=True,
         )
         self.pallet_name = pallet_name
 

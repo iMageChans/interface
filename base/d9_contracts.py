@@ -32,7 +32,6 @@ class D9Contract:
                 ss58_format=9,
                 type_registry_preset='polkadot',
                 cache_region=region,
-                auto_reconnect=True,
             ),
         )
 
