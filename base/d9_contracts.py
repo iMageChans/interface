@@ -41,10 +41,14 @@ class D9Contract:
         return self.contract.substrate.get_block_number(block_hash=block_hash)
 
     def contract_exec(self, call_name: str, call_params: dict | None = None, value: int = 0):
-        return self.contract.exec(self.keypair, call_name, call_params, value)
+        exec = self.contract.exec(self.keypair, call_name, call_params, value)
+        self.contract.substrate.close()
+        return exec
 
     def contract_read(self, call_name: str, call_params: dict | None = None, value: int = 0):
-        return self.contract.read(self.keypair, call_name, call_params, value)
+        read = self.contract.read(self.keypair, call_name, call_params, value)
+        self.contract.substrate.close()
+        return read
 
     def contract_call(self, call_name: str, call_params: dict | None = None, value: int = 0):
         return self.call(self.keypair, call_name, call_params, value)
