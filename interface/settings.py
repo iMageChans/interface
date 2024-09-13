@@ -32,16 +32,15 @@ DEBUG = env.bool('DEBUG_TEST', False)
 
 ALLOWED_HOSTS = ['*']
 #
-CORS_ALLOWED_ORIGINS = [
-    'https://d9-test-server.q6z4kzhr.uk',
-]
+# CORS_ALLOWED_ORIGINS = [
+#     'https://d9-test-server.q6z4kzhr.uk',
+# ]
 #
 # CORS_ALLOW_CREDENTIALS = True
 #
-# CSRF_TRUSTED_ORIGINS = [
-#     'http://localhost:5173',
-#     'https://d9-test-server.q6z4kzhr.uk',
-# ]
+CSRF_TRUSTED_ORIGINS = [
+    'https://d9-test-server.q6z4kzhr.uk',
+]
 
 
 CORS_ALLOW_ALL_ORIGINS = True
