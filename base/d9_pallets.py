@@ -20,21 +20,19 @@ ws_options = {
     'write_limit': 2 ** 23,
 }
 
-substrate = SubstrateInterface(
-    url=PYTHON_MAIN_NET_URL,
-    ss58_format=9,
-    type_registry_preset='polkadot',
-    auto_discover=False,
-    use_remote_preset=False,
-    auto_reconnect=True,
-    ws_options=ws_options,
-    cache_region=region,
-)
-
 
 class D9PalletsExec:
     def __init__(self, pallet_name: str):
-        self.substrate = substrate
+        self.substrate = SubstrateInterface(
+            url=PYTHON_MAIN_NET_URL,
+            ss58_format=9,
+            type_registry_preset='polkadot',
+            auto_discover=False,
+            use_remote_preset=False,
+            auto_reconnect=True,
+            ws_options=ws_options,
+            cache_region=region,
+        )
         self.d9_interface = self.substrate
 
         self.pallet_name = pallet_name
@@ -49,7 +47,16 @@ class D9PalletsExec:
 
 class D9PalletsRead:
     def __init__(self, pallet_name: str):
-        self.substrate = substrate
+        self.substrate = SubstrateInterface(
+            url=PYTHON_MAIN_NET_URL,
+            ss58_format=9,
+            type_registry_preset='polkadot',
+            auto_discover=False,
+            use_remote_preset=False,
+            auto_reconnect=True,
+            ws_options=ws_options,
+            cache_region=region,
+        )
         self.d9_interface = self.substrate
         self.pallet_name = pallet_name
 

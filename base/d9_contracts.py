@@ -23,22 +23,20 @@ ws_options = {
     'write_limit': 2 ** 23,
 }
 
-substrate = SubstrateInterface(
-    url=PYTHON_MAIN_NET_URL,
-    ss58_format=9,
-    type_registry_preset='polkadot',
-    auto_discover=False,
-    use_remote_preset=False,
-    auto_reconnect=True,
-    ws_options=ws_options,
-    cache_region=region,
-)
-
 
 class D9Contract:
     def __init__(self, contract_address: str, metadata_file: str, keypair: Keypair):
         self.keypair = keypair
-        self.substrate = substrate
+        self.substrate = substrate = SubstrateInterface(
+            url=PYTHON_MAIN_NET_URL,
+            ss58_format=9,
+            type_registry_preset='polkadot',
+            auto_discover=False,
+            use_remote_preset=False,
+            auto_reconnect=True,
+            ws_options=ws_options,
+            cache_region=region,
+        )
         self.contract = ContractInstance.create_from_address(
             contract_address=contract_address,
             metadata_file=metadata_file,
@@ -58,10 +56,10 @@ class D9Contract:
         return self.contract.substrate.get_block_number(block_hash=block_hash)
 
     def contract_exec(
-        self,
-        call_name: str,
-        call_params: Optional[dict] = None,
-        value: int = 0
+            self,
+            call_name: str,
+            call_params: Optional[dict] = None,
+            value: int = 0
     ):
         """
         执行会改变合约状态的函数。
@@ -78,10 +76,10 @@ class D9Contract:
         return result
 
     def contract_read(
-        self,
-        call_name: str,
-        call_params: Optional[dict] = None,
-        value: int = 0
+            self,
+            call_name: str,
+            call_params: Optional[dict] = None,
+            value: int = 0
     ):
         """
         读取合约数据，不改变状态。
@@ -98,10 +96,10 @@ class D9Contract:
         return result
 
     def contract_call(
-        self,
-        call_name: str,
-        call_params: Optional[dict] = None,
-        value: int = 0
+            self,
+            call_name: str,
+            call_params: Optional[dict] = None,
+            value: int = 0
     ):
         """
         组装合约调用。
@@ -117,10 +115,10 @@ class D9Contract:
         return self.call(self.keypair, call_name, call_params, value)
 
     def contract_get_payment_info(
-        self,
-        call_name: str,
-        call_params: Optional[dict] = None,
-        value: int = 0
+            self,
+            call_name: str,
+            call_params: Optional[dict] = None,
+            value: int = 0
     ):
         """
         获取合约调用的支付信息。
@@ -136,13 +134,13 @@ class D9Contract:
         return self.get_payment_info(self.keypair, call_name, call_params, value)
 
     def get_payment_info(
-        self,
-        keypair: Keypair,
-        method: str,
-        args: Optional[dict] = None,
-        value: int = 0,
-        gas_limit: Optional[dict] = None,
-        storage_deposit_limit: Optional[int] = None
+            self,
+            keypair: Keypair,
+            method: str,
+            args: Optional[dict] = None,
+            value: int = 0,
+            gas_limit: Optional[dict] = None,
+            storage_deposit_limit: Optional[int] = None
     ):
         """
         计算合约调用的支付信息。
@@ -181,13 +179,13 @@ class D9Contract:
         return self.contract.substrate.get_payment_info(call=call, keypair=keypair)
 
     def call(
-        self,
-        keypair: Keypair,
-        method: str,
-        args: Optional[dict] = None,
-        value: int = 0,
-        gas_limit: Optional[dict] = None,
-        storage_deposit_limit: Optional[int] = None
+            self,
+            keypair: Keypair,
+            method: str,
+            args: Optional[dict] = None,
+            value: int = 0,
+            gas_limit: Optional[dict] = None,
+            storage_deposit_limit: Optional[int] = None
     ) -> GenericCall:
         """
         组装合约方法的调用对象。
