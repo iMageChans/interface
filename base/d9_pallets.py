@@ -19,7 +19,6 @@ class D9PalletsExec:
             auto_discover=False,
             use_remote_preset=False,
             auto_reconnect=True,
-            cache_region=region,
         )
         self.d9_interface = self.substrate
 
@@ -42,8 +41,6 @@ class D9PalletsRead:
             auto_discover=False,
             use_remote_preset=False,
             auto_reconnect=True,
-            ws_options=ws_options,
-            cache_region=region,
         )
         self.d9_interface = self.substrate
         self.pallet_name = pallet_name
