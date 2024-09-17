@@ -3,7 +3,6 @@ from django_redis import get_redis_connection
 from substrateinterface import SubstrateInterface
 
 from base.config import PYTHON_MAIN_NET_URL
-from base.d9_interfaces import get_thread_substrate
 
 redis_connection = get_redis_connection('default')
 
@@ -12,10 +11,30 @@ region = make_region().configure(
     expiration_time=3600,
 )
 
+ws_options = {
+    'ping_interval': 30,
+    'ping_timeout': 10,
+    'connection_timeout': 20,
+    'max_size': 2 ** 23,  # 8MB
+    'read_limit': 2 ** 23,
+    'write_limit': 2 ** 23,
+}
+
+substrate = SubstrateInterface(
+    url=PYTHON_MAIN_NET_URL,
+    ss58_format=9,
+    type_registry_preset='polkadot',
+    auto_discover=False,
+    use_remote_preset=False,
+    auto_reconnect=True,
+    ws_options=ws_options,
+    cache_region=region,
+)
+
 
 class D9PalletsExec:
     def __init__(self, pallet_name: str):
-        self.substrate = get_thread_substrate()
+        self.substrate = substrate
         self.d9_interface = self.substrate
 
         self.pallet_name = pallet_name
@@ -30,7 +49,7 @@ class D9PalletsExec:
 
 class D9PalletsRead:
     def __init__(self, pallet_name: str):
-        self.substrate = get_thread_substrate()
+        self.substrate = substrate
         self.d9_interface = self.substrate
         self.pallet_name = pallet_name
 

@@ -14,11 +14,31 @@ region = make_region().configure(
     expiration_time=3600,
 )
 
+ws_options = {
+    'ping_interval': 30,
+    'ping_timeout': 10,
+    'connection_timeout': 20,
+    'max_size': 2 ** 23,  # 8MB
+    'read_limit': 2 ** 23,
+    'write_limit': 2 ** 23,
+}
+
+substrate = SubstrateInterface(
+    url=PYTHON_MAIN_NET_URL,
+    ss58_format=9,
+    type_registry_preset='polkadot',
+    auto_discover=False,
+    use_remote_preset=False,
+    auto_reconnect=True,
+    ws_options=ws_options,
+    cache_region=region,
+)
+
 
 class D9Contract:
     def __init__(self, contract_address: str, metadata_file: str, keypair: Keypair):
         self.keypair = keypair
-        self.substrate = get_thread_substrate()
+        self.substrate = substrate
         self.contract = ContractInstance.create_from_address(
             contract_address=contract_address,
             metadata_file=metadata_file,
