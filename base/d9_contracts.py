@@ -22,6 +22,7 @@ class D9Contract:
             auto_discover=False,
             use_remote_preset=False,
             auto_reconnect=True,
+            cache_region=region,
         )
         self.contract = ContractInstance.create_from_address(
             contract_address=contract_address,

@@ -21,4 +21,4 @@ EXPOSE 8000
 ENTRYPOINT ["/entrypoint.sh"]
 
 #CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
-CMD ["uvicorn", "interface.asgi:application", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["/entrypoint.sh", "gunicorn", "interface.wsgi:application", "--bind", "0.0.0.0:8000", "--workers", "4"]
