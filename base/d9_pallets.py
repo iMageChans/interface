@@ -9,15 +9,6 @@ region = make_region().configure(
     expiration_time=3600,
 )
 
-ws_options = {
-    'ping_interval': 30,
-    'ping_timeout': 10,
-    'connection_timeout': 20,
-    'max_size': 2 ** 23,  # 8MB
-    'read_limit': 2 ** 23,
-    'write_limit': 2 ** 23,
-}
-
 
 class D9PalletsExec:
     def __init__(self, pallet_name: str):
@@ -28,7 +19,6 @@ class D9PalletsExec:
             auto_discover=False,
             use_remote_preset=False,
             auto_reconnect=True,
-            ws_options=ws_options,
             cache_region=region,
         )
         self.d9_interface = self.substrate
