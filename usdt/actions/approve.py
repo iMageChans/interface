@@ -12,9 +12,3 @@ class Approve(BaseActionsExec):
             spender=to_address.get_valid_address(),
             amount=numbers.to_usdt(validated_data['amount']),
         )
-
-    def serializers(self):
-        return self.results.value_serialized
-
-    def is_success(self):
-        return True

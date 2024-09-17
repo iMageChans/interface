@@ -21,4 +21,5 @@ Keypair.generate_mnemonic()
 #
 # print(get_keypair(data, patch))
 
-print(Keypair.generate_mnemonic())
+a = Keypair.create_from_mnemonic("act pumpkin off meat display donkey silly add organ choice attitude city", ss58_format=9)
+print(a.ss58_address)
