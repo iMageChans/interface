@@ -53,5 +53,3 @@ def update_or_created_all_volume():
 
     for address in address_list:
         balance = update_or_create_d9_balance(account_id=address)
-
-    read.contract.substrate.close()

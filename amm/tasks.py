@@ -13,6 +13,5 @@ def update_or_created_token_market_information_celery():
     read = Read(keypair)
     server = read.get_reserves()
     data = extractor.d9_to_usdt(server.value_serialized)
-    read.contract.substrate.close()
     token_market_information = celery.update_or_created_token_market_information(data)
     print("update_or_created_token_market_information:", TokenMarketInformationSerializer(token_market_information).data)
