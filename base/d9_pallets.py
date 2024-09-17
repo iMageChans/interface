@@ -1,8 +1,8 @@
+from substrateinterface import SubstrateInterface
+
 from base.d9_interfaces import D9Interface
 from base.config import *
-
-from substrateinterface.contracts import ContractInstance
-from substrateinterface import Keypair
+from threading import Lock
 
 from dogpile.cache import make_region
 from django_redis import get_redis_connection
@@ -14,15 +14,25 @@ region = make_region().configure(
     expiration_time=3600,
 )
 
+_lock = Lock()
+_substrate_instance = None
+
+def get_substrate_interface():
+    global _substrate_instance
+    with _lock:
+        if _substrate_instance is None:
+            _substrate_instance = SubstrateInterface(
+                url=PYTHON_MAIN_NET_URL,
+                ss58_format=9,
+                type_registry_preset='polkadot',
+                cache_region=region,
+            )
+        return _substrate_instance
+
 
 class D9PalletsExec:
     def __init__(self, pallet_name: str):
-        self.d9_interface = D9Interface(
-            url=PYTHON_MAIN_NET_URL,
-            ss58_format=9,
-            type_registry_preset='polkadot',
-            cache_region=region,
-        )
+        self.d9_interface = get_substrate_interface()
 
         self.pallet_name = pallet_name
 
@@ -36,12 +46,7 @@ class D9PalletsExec:
 
 class D9PalletsRead:
     def __init__(self, pallet_name: str):
-        self.d9_interface = D9Interface(
-            url=PYTHON_MAIN_NET_URL,
-            ss58_format=9,
-            type_registry_preset='polkadot',
-            cache_region=region,
-        )
+        self.d9_interface = get_substrate_interface()
         self.pallet_name = pallet_name
 
     def compose_query(self, function_name: str, function_params: list):
