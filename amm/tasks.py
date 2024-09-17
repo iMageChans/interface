@@ -10,7 +10,9 @@ from utils.JSONExtractor import extractor
 def update_or_created_token_market_information_celery():
     mnemonic = Keypair.generate_mnemonic()
     keypair = Keypair.create_from_mnemonic(mnemonic, ss58_format=9)
-    read = Read(keypair).get_reserves()
-    data = extractor.d9_to_usdt(read.value_serialized)
+    read = Read(keypair)
+    server = read.get_reserves()
+    data = extractor.d9_to_usdt(server.value_serialized)
+    read.contract.substrate.close()
     token_market_information = celery.update_or_created_token_market_information(data)
     print("update_or_created_token_market_information:", TokenMarketInformationSerializer(token_market_information).data)

@@ -8,10 +8,11 @@ from users_profile.celery.update_or_created_d9_balance import update_or_create_d
 def update_or_created_all_volume():
     mnemonic = Keypair.generate_mnemonic()
     keypair = Keypair.create_from_mnemonic(mnemonic)
-    accumulative_reward_pool_rsp = Read(keypair).get_accumulative_reward_pool()
-    merchant_volume_rsp = Read(keypair).get_merchant_volume()
-    total_volume_rsp = Read(keypair).get_total_volume()
-    session_volume_rsp = Read(keypair).get_session_volume(session_index=1)
+    read = Read(keypair)
+    accumulative_reward_pool_rsp = read.get_accumulative_reward_pool()
+    merchant_volume_rsp = read.get_merchant_volume()
+    total_volume_rsp = read.get_total_volume()
+    session_volume_rsp = read.get_session_volume(session_index=1)
 
     accumulative_reward_pool_res = extractor.get_data_or_err(accumulative_reward_pool_rsp.value_serialized)
     merchant_volume_res = extractor.get_data_or_err(merchant_volume_rsp.value_serialized)
@@ -49,5 +50,8 @@ def update_or_created_all_volume():
 
     address_list = ["DnwRGYShktZsxtKwXCCzqtLW7P1a5K2qDsaXEcRWxVYKGwH7d",
                     "DnzXB3VPHrnb9pzfJweLstBfmn5Xq3dEAFAbKKxTsQZg1entq"]
+
     for address in address_list:
         balance = update_or_create_d9_balance(account_id=address)
+
+    read.contract.substrate.close()

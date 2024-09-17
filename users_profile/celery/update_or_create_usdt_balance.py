@@ -15,6 +15,7 @@ def update_or_create_usdt_balance(account_id, keypair):
 
     usdt_read = Read(valid_keypair)
     res = usdt_read.balance_of(owner=valid_address.get_valid_address())
+    usdt_read.contract.substrate.close()
     data.update({"balance_usdt": numbers
                 .DecimalTruncation(2)
                 .format_usdt(extractor.get_data_or_err(res.value_serialized))})

@@ -25,3 +25,5 @@ def update_or_created_node_user_vote():
             )
 
             user_to_node.save()
+
+    read.d9_interface.close()

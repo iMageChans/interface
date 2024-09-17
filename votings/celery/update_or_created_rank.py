@@ -22,6 +22,7 @@ def update_or_created_rank():
             node_id=data['node_id'],
             defaults=data
         )
+    read.d9_interface.close()
 
         # print({"node_id": ranks.node_id, "node_name": ranks.node_name, "sharing_percent": ranks.sharing_percent,
         #        "accumulative_votes": ranks.accumulative_votes, "created": created})

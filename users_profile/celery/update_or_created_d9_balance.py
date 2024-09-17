@@ -14,6 +14,7 @@ def update_or_create_d9_balance(account_id):
 
     balances_read = Read()
     res = balances_read.get_balances(account_id=valid_address.get_valid_address())
+    balances_read.d9_interface.close()
     data.update({"balance_d9": numbers.DecimalTruncation(4).format_d9(extractor.get_balances_d9(res))})
 
     try:
