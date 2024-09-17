@@ -5,7 +5,6 @@ from substrateinterface.contracts import ContractInstance
 from substrateinterface import Keypair, SubstrateInterface
 from dogpile.cache import make_region
 from typing import Optional
-from threading import Lock
 
 # Configure cache region
 region = make_region().configure(
@@ -14,29 +13,20 @@ region = make_region().configure(
 )
 
 
-_lock = Lock()
-_substrate_instance = None
-
-def get_substrate_interface():
-    global _substrate_instance
-    with _lock:
-        if _substrate_instance is None:
-            _substrate_instance = SubstrateInterface(
-                url=PYTHON_MAIN_NET_URL,
-                ss58_format=9,
-                type_registry_preset='polkadot',
-                cache_region=region,
-            )
-        return _substrate_instance
-
-
 class D9Contract:
     def __init__(self, contract_address: str, metadata_file: str, keypair: Keypair):
         self.keypair = keypair
+        self.substrate = SubstrateInterface(
+            url=PYTHON_MAIN_NET_URL,
+            ss58_format=9,
+            type_registry_preset='polkadot',
+            cache_region=region,
+        )
+        self.substrate.init_runtime()
         self.contract = ContractInstance.create_from_address(
             contract_address=contract_address,
             metadata_file=metadata_file,
-            substrate=get_substrate_interface(),
+            substrate=self.substrate,
         )
 
     def get_block_number(self, block_hash: str) -> int:
