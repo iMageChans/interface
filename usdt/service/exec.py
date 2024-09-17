@@ -20,7 +20,7 @@ class Exec(D9Contract):
             "spender": spender,
             "value": amount
         }
-        return self.contract_exec('PSP22::approve', params)
+        return self.contract_read('PSP22::approve', params)
 
     def decrease_allowance(self, spender: str, amount: int):
         params = {
