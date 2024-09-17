@@ -45,5 +45,5 @@ class USDTBalancesSerializer(serializers.ModelSerializer):
         fields = ['balance_usdt']
 
 
-class UsersProfileSerializer(serializers.Serializer):
-    keypair = serializers.CharField(required=True, write_only=True)
+class UsersProfileSerializer(KeypairSerializer):
+    pass
