@@ -1,4 +1,6 @@
 from base64 import b64encode, b64decode
+from unittest.mock import patch
+
 from substrateinterface.keypair import Keypair
 
 Keypair.generate_mnemonic()
@@ -9,6 +11,12 @@ Keypair.generate_mnemonic()
 #     "path": "/1"
 # }
 
-data = "blast curve early try fold fall plastic hobby donkey tomato crater diet, /1"
+data = "blast curve early try fold fall plastic hobby donkey tomato crater diet"
+patch = '/1'
 
-print(b64decode(data))
+def get_keypair(mnemonic, path):
+    keypair = Keypair.create_from_uri(mnemonic + path, ss58_format=9)
+    return keypair.ss58_address, keypair.public_key.hex()
+
+
+print(get_keypair(data, patch))

@@ -1,24 +1,28 @@
 from substrateinterface import Keypair
 
 
-def check_keypair(data):
-    if Keypair.validate_mnemonic(data):
-        try:
-            return Keypair.create_from_mnemonic(data, ss58_format=9)
-        except ValueError:
-            raise ValueError("ECDSA mnemonic only supports english")
-    elif isinstance(data, list):
-        try:
-            mnemonic = ' '.join(data)
-            return Keypair.create_from_mnemonic(mnemonic, ss58_format=9)
-        except ValueError:
-            raise ValueError("ECDSA mnemonic only supports english")
-    elif isinstance(data, str):
-        try:
-            keypair = Keypair.create_from_private_key(data, ss58_format=9)
-        except ValueError:
-            keypair = Keypair.create_from_seed(data, ss58_format=9)
-        return keypair
+def check_keypair(keypair, path=None):
+    if path is None or path == "":
+        if Keypair.validate_mnemonic(keypair):
+            try:
+                return Keypair.create_from_mnemonic(keypair, ss58_format=9)
+            except ValueError:
+                raise ValueError("ECDSA mnemonic only supports english")
+        elif isinstance(keypair, list):
+            try:
+                mnemonic = ' '.join(keypair)
+                return Keypair.create_from_mnemonic(mnemonic, ss58_format=9)
+            except ValueError:
+                raise ValueError("ECDSA mnemonic only supports english")
+        elif isinstance(keypair, str):
+            try:
+                keypair = Keypair.create_from_private_key(keypair, ss58_format=9)
+            except ValueError:
+                keypair = Keypair.create_from_seed(keypair, ss58_format=9)
+            return keypair
+    else:
+        mnemonic = keypair + path
+        return Keypair.create_from_uri(mnemonic, ss58_format=9)
 
 
 class ValidAddress:

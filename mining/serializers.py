@@ -1,4 +1,6 @@
 from rest_framework import serializers
+
+from base.serializers import KeypairSerializer
 from mining.models import *
 from utils.numbers import DecimalTruncation
 
@@ -47,22 +49,21 @@ class TotalVolumeSerializer(serializers.ModelSerializer):
         return DecimalTruncation(2).format_d9(obj.totals)
 
 
-class GetAccumulativeRewardPoolSerializer(serializers.Serializer):
-    keypair = serializers.CharField(required=True, write_only=True)
+class GetAccumulativeRewardPoolSerializer(KeypairSerializer):
+    pass
 
 
-class GetMerchantVolumeSerializer(serializers.Serializer):
-    keypair = serializers.CharField(required=True, write_only=True)
+class GetMerchantVolumeSerializer(KeypairSerializer):
+    pass
 
 
-class GetSessionVolumeSerializer(serializers.Serializer):
-    keypair = serializers.CharField(required=True, write_only=True)
+class GetSessionVolumeSerializer(KeypairSerializer):
     session_index = serializers.IntegerField(required=True)
 
 
-class GetTotalVolumeSerializer(serializers.Serializer):
-    keypair = serializers.CharField(required=True, write_only=True)
+class GetTotalVolumeSerializer(KeypairSerializer):
+    pass
 
 
-class GetAllVolumeSerializer(serializers.Serializer):
-    keypair = serializers.CharField(required=True)
+class GetAllVolumeSerializer(KeypairSerializer):
+    pass

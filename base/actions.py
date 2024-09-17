@@ -4,7 +4,7 @@ from utils.JSONExtractor import extractor
 
 class BaseAction:
     def __init__(self, validated_data):
-        self.keypair = keystone.check_keypair(validated_data['keypair'])
+        self.keypair = keystone.check_keypair(keypair=validated_data['keypair'], path=validated_data['path'])
         try:
             self.account_id = keystone.ValidAddress(
                 validated_data.get('account_id', f"Dn{self.keypair.ss58_address}")

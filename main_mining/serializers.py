@@ -1,9 +1,10 @@
 from rest_framework import serializers
+
+from base.serializers import KeypairSerializer
 from main_mining import models
 
 
-class BurningSerializer(serializers.Serializer):
-    keypair = serializers.CharField(required=True, write_only=True)
+class BurningSerializer(KeypairSerializer):
     account_id = serializers.CharField(required=False)
     amount = serializers.IntegerField(required=True)
 
@@ -13,8 +14,8 @@ class BurningSerializer(serializers.Serializer):
         return value
 
 
-class BurningWithdrawSerializer(serializers.Serializer):
-    keypair = serializers.CharField(required=True, write_only=True)
+class BurningWithdrawSerializer(KeypairSerializer):
+    pass
 
 
 class TotalBurnedSerializer(serializers.ModelSerializer):
@@ -23,14 +24,13 @@ class TotalBurnedSerializer(serializers.ModelSerializer):
         fields = ['totals']
 
 
-class GetTotalBurnedSerializer(serializers.Serializer):
-    keypair = serializers.CharField(required=True, write_only=True)
+class GetTotalBurnedSerializer(KeypairSerializer):
+    pass
 
 
-class GetBurnUserPortfolioSerializer(serializers.Serializer):
-    keypair = serializers.CharField(required=True, write_only=True)
+class GetBurnUserPortfolioSerializer(KeypairSerializer):
     account_id = serializers.CharField(required=False)
 
 
-class GetReturnPercentSerializer(serializers.Serializer):
-    keypair = serializers.CharField(required=True, write_only=True)
+class GetReturnPercentSerializer(KeypairSerializer):
+    pass

@@ -1,8 +1,9 @@
 from rest_framework import serializers
 
+from base.serializers import KeypairSerializer
 
-class GenerateQRCodeSerializer(serializers.Serializer):
-    keypair = serializers.CharField(required=True, write_only=True)
+
+class GenerateQRCodeSerializer(KeypairSerializer):
     amount = serializers.IntegerField(required=True)
     type = serializers.CharField(required=True)
 

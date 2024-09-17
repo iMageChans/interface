@@ -1,82 +1,70 @@
 from rest_framework import serializers
+
+from base.serializers import KeypairSerializer
 from usdt.models import CurrencyProfile
 
 
-class GetBalancesSerializer(serializers.Serializer):
-    keypair = serializers.CharField(required=True, write_only=True)
+class GetBalancesSerializer(KeypairSerializer):
     account_id = serializers.CharField(required=False)
 
 
-class TotalSupplySerializer(serializers.Serializer):
-    keypair = serializers.CharField(required=True, write_only=True)
+class TotalSupplySerializer(KeypairSerializer):
+    pass
 
 
-class ApproveSerializer(serializers.Serializer):
-    keypair = serializers.CharField(required=True, write_only=True)
-    account_id = serializers.CharField(required=True)
-    amount = serializers.FloatField(required=True)
-
-
-class DecreaseAllowanceSerializer(serializers.Serializer):
-    keypair = serializers.CharField(required=True, write_only=True)
-    account_id = serializers.CharField(required=True)
-    amount = serializers.FloatField(required=True)
-
-
-class IncreaseAllowanceSerializer(serializers.Serializer):
-    keypair = serializers.CharField(required=True, write_only=True)
+class ApproveSerializer(KeypairSerializer):
     to_address = serializers.CharField(required=True)
     amount = serializers.FloatField(required=True)
 
 
-class NodeRewardAllowanceSerializer(serializers.Serializer):
-    keypair = serializers.CharField(required=True, write_only=True)
-    amount = serializers.FloatField(required=True)
-
-
-class BurnMiningAllowanceSerializer(serializers.Serializer):
-    keypair = serializers.CharField(required=True, write_only=True)
-    amount = serializers.FloatField(required=True)
-
-
-class MainMiningAllowanceSerializer(serializers.Serializer):
-    keypair = serializers.CharField(required=True, write_only=True)
-    amount = serializers.FloatField(required=True)
-
-
-class MiningAllowanceSerializer(serializers.Serializer):
-    keypair = serializers.CharField(required=True, write_only=True)
-    amount = serializers.FloatField(required=True)
-
-
-class MarketMakerAllowanceSerializer(serializers.Serializer):
-    keypair = serializers.CharField(required=True, write_only=True)
-    amount = serializers.FloatField(required=True)
-
-
-class USDTAllowanceSerializer(serializers.Serializer):
-    keypair = serializers.CharField(required=True, write_only=True)
-    amount = serializers.FloatField(required=True)
-
-
-class MerchantAllowanceSerializer(serializers.Serializer):
-    keypair = serializers.CharField(required=True, write_only=True)
-    amount = serializers.FloatField(required=True)
-
-
-class CrossChainAllowanceSerializer(serializers.Serializer):
-    keypair = serializers.CharField(required=True, write_only=True)
-    amount = serializers.FloatField(required=True)
-
-
-class TransferSerializer(serializers.Serializer):
-    keypair = serializers.CharField(required=True, write_only=True)
+class DecreaseAllowanceSerializer(KeypairSerializer):
     to_address = serializers.CharField(required=True)
     amount = serializers.FloatField(required=True)
 
 
-class TransferFromSerializer(serializers.Serializer):
-    keypair = serializers.CharField(required=True, write_only=True)
+class IncreaseAllowanceSerializer(KeypairSerializer):
+    to_address = serializers.CharField(required=True)
+    amount = serializers.FloatField(required=True)
+
+
+class NodeRewardAllowanceSerializer(KeypairSerializer):
+    amount = serializers.FloatField(required=True)
+
+
+class BurnMiningAllowanceSerializer(KeypairSerializer):
+    amount = serializers.FloatField(required=True)
+
+
+class MainMiningAllowanceSerializer(KeypairSerializer):
+    amount = serializers.FloatField(required=True)
+
+
+class MiningAllowanceSerializer(KeypairSerializer):
+    amount = serializers.FloatField(required=True)
+
+
+class MarketMakerAllowanceSerializer(KeypairSerializer):
+    amount = serializers.FloatField(required=True)
+
+
+class USDTAllowanceSerializer(KeypairSerializer):
+    amount = serializers.FloatField(required=True)
+
+
+class MerchantAllowanceSerializer(KeypairSerializer):
+    amount = serializers.FloatField(required=True)
+
+
+class CrossChainAllowanceSerializer(KeypairSerializer):
+    amount = serializers.FloatField(required=True)
+
+
+class TransferSerializer(KeypairSerializer):
+    to_address = serializers.CharField(required=True)
+    amount = serializers.FloatField(required=True)
+
+
+class TransferFromSerializer(KeypairSerializer):
     from_address = serializers.CharField(required=True)
     to_address = serializers.CharField(required=True)
     amount = serializers.FloatField(required=True)
@@ -92,7 +80,6 @@ class CurrencyProfileSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class GetAllowanceSerializer(serializers.Serializer):
-    keypair = serializers.CharField(required=True, write_only=True)
+class GetAllowanceSerializer(KeypairSerializer):
     from_address = serializers.CharField(required=True)
     to_address = serializers.CharField(required=True)
