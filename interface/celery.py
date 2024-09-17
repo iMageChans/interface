@@ -17,7 +17,7 @@ app.autodiscover_tasks()
 app.conf.beat_schedule = {
     'update_or_created_node_user_vote_celery': {
         'task': 'votings.tasks.update_or_created_node_user_vote_celery',
-        'schedule': timedelta(seconds=60),
+        'schedule': timedelta(seconds=600),
     },
     'get_rank': {
         'task': 'votings.tasks.get_rank',
