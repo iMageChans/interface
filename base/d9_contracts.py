@@ -1,10 +1,12 @@
 from scalecodec.types import GenericCall
-from base.d9_interfaces import D9Interface
+import threading
 from base.config import PYTHON_MAIN_NET_URL
 from substrateinterface.contracts import ContractInstance
 from substrateinterface import Keypair, SubstrateInterface
 from dogpile.cache import make_region
 from typing import Optional
+
+from base.d9_interfaces import get_thread_substrate
 
 # Configure cache region
 region = make_region().configure(
@@ -16,13 +18,7 @@ region = make_region().configure(
 class D9Contract:
     def __init__(self, contract_address: str, metadata_file: str, keypair: Keypair):
         self.keypair = keypair
-        self.substrate = SubstrateInterface(
-            url=PYTHON_MAIN_NET_URL,
-            ss58_format=9,
-            type_registry_preset='polkadot',
-            cache_region=region,
-        )
-        self.substrate.init_runtime()
+        self.substrate = get_thread_substrate()
         self.contract = ContractInstance.create_from_address(
             contract_address=contract_address,
             metadata_file=metadata_file,
