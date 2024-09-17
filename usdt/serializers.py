@@ -14,13 +14,13 @@ class TotalSupplySerializer(serializers.Serializer):
 class ApproveSerializer(serializers.Serializer):
     keypair = serializers.CharField(required=True, write_only=True)
     account_id = serializers.CharField(required=True)
-    amount = serializers.IntegerField(required=True)
+    amount = serializers.FloatField(required=True)
 
 
 class DecreaseAllowanceSerializer(serializers.Serializer):
     keypair = serializers.CharField(required=True, write_only=True)
     account_id = serializers.CharField(required=True)
-    amount = serializers.IntegerField(required=True)
+    amount = serializers.FloatField(required=True)
 
 
 class IncreaseAllowanceSerializer(serializers.Serializer):
@@ -31,42 +31,42 @@ class IncreaseAllowanceSerializer(serializers.Serializer):
 
 class NodeRewardAllowanceSerializer(serializers.Serializer):
     keypair = serializers.CharField(required=True, write_only=True)
-    amount = serializers.IntegerField(required=True)
+    amount = serializers.FloatField(required=True)
 
 
 class BurnMiningAllowanceSerializer(serializers.Serializer):
     keypair = serializers.CharField(required=True, write_only=True)
-    amount = serializers.IntegerField(required=True)
+    amount = serializers.FloatField(required=True)
 
 
 class MainMiningAllowanceSerializer(serializers.Serializer):
     keypair = serializers.CharField(required=True, write_only=True)
-    amount = serializers.IntegerField(required=True)
+    amount = serializers.FloatField(required=True)
 
 
 class MiningAllowanceSerializer(serializers.Serializer):
     keypair = serializers.CharField(required=True, write_only=True)
-    amount = serializers.IntegerField(required=True)
+    amount = serializers.FloatField(required=True)
 
 
 class MarketMakerAllowanceSerializer(serializers.Serializer):
     keypair = serializers.CharField(required=True, write_only=True)
-    amount = serializers.IntegerField(required=True)
+    amount = serializers.FloatField(required=True)
 
 
 class USDTAllowanceSerializer(serializers.Serializer):
     keypair = serializers.CharField(required=True, write_only=True)
-    amount = serializers.IntegerField(required=True)
+    amount = serializers.FloatField(required=True)
 
 
 class MerchantAllowanceSerializer(serializers.Serializer):
     keypair = serializers.CharField(required=True, write_only=True)
-    amount = serializers.IntegerField(required=True)
+    amount = serializers.FloatField(required=True)
 
 
 class CrossChainAllowanceSerializer(serializers.Serializer):
     keypair = serializers.CharField(required=True, write_only=True)
-    amount = serializers.IntegerField(required=True)
+    amount = serializers.FloatField(required=True)
 
 
 class TransferSerializer(serializers.Serializer):
@@ -79,7 +79,7 @@ class TransferFromSerializer(serializers.Serializer):
     keypair = serializers.CharField(required=True, write_only=True)
     from_address = serializers.CharField(required=True)
     to_address = serializers.CharField(required=True)
-    amount = serializers.IntegerField(required=True)
+    amount = serializers.FloatField(required=True)
 
 
 class GetCurrencyProfileSerializer(serializers.Serializer):

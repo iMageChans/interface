@@ -9,4 +9,4 @@ class GetBalancesSerializer(serializers.Serializer):
 class TransferSerializer(serializers.Serializer):
     keypair = serializers.CharField(required=True, write_only=True)
     to_address = serializers.CharField(required=True)
-    amount = serializers.IntegerField(required=True)
+    amount = serializers.FloatField(required=True)

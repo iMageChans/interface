@@ -32,15 +32,15 @@ class GetLiquidityProviderSerializer(serializers.Serializer):
 
 class CheckNewLiquiditySerializer(serializers.Serializer):
     keypair = serializers.CharField(required=True, write_only=True)
-    usdt_liquidity = serializers.IntegerField(required=True)
-    d9_liquidity = serializers.IntegerField(required=True)
+    usdt_liquidity = serializers.FloatField(required=True)
+    d9_liquidity = serializers.FloatField(required=True)
 
 
 class ComputeExchangeRateSerializer(serializers.Serializer):
     keypair = serializers.CharField(required=True, write_only=True)
     from_currency = serializers.CharField(required=True)
     to_currency = serializers.CharField(required=True)
-    from_amount = serializers.IntegerField(required=True)
+    from_amount = serializers.FloatField(required=True)
 
 
 class EstimateExchangeSerializer(serializers.Serializer):
@@ -53,28 +53,28 @@ class EstimateExchangeSerializer(serializers.Serializer):
 class CheckUSDTBalanceSerializer(serializers.Serializer):
     keypair = serializers.CharField(required=True, write_only=True)
     account_id = serializers.CharField(required=True)
-    amount = serializers.IntegerField(required=True)
+    amount = serializers.FloatField(required=True)
 
 
 class AddLiquiditySerializer(serializers.Serializer):
     keypair = serializers.CharField(required=True, write_only=True)
-    usdt_amount = serializers.IntegerField(required=True)
-    d9_amount = serializers.IntegerField(required=True)
+    usdt_amount = serializers.FloatField(required=True)
+    d9_amount = serializers.FloatField(required=True)
 
 
 class RemoveLiquiditySerializer(serializers.Serializer):
     keypair = serializers.CharField(required=True, write_only=True)
-    percent = serializers.IntegerField(required=True)
+    percent = serializers.FloatField(required=True)
 
 
 class GetD9Serializer(serializers.Serializer):
     keypair = serializers.CharField(required=True, write_only=True)
-    amount = serializers.IntegerField(required=True)
+    amount = serializers.FloatField(required=True)
 
 
 class GetUSDTSerializer(serializers.Serializer):
     keypair = serializers.CharField(required=True, write_only=True)
-    amount = serializers.IntegerField(required=True)
+    amount = serializers.FloatField(required=True)
 
 
 class GetTotalLpTokensSerializer(serializers.Serializer):

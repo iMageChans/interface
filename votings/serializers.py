@@ -39,7 +39,7 @@ class GetSessionNodeListSerializer(serializers.Serializer):
 class AddVotingInterestSerializer(serializers.Serializer):
     keypair = serializers.CharField(required=True)
     account_id = serializers.CharField(required=True)
-    amount_to_burn = serializers.IntegerField(required=True)
+    amount_to_burn = serializers.FloatField(required=True)
 
 
 class ChangeCandidateNameSerializer(serializers.Serializer):
@@ -61,7 +61,7 @@ class TryRemoveVotesFromCandidateSerializer(serializers.Serializer):
 class DelegateVotesSerializer(serializers.Serializer):
     keypair = serializers.CharField(required=True)
     candidate = serializers.CharField(required=True)
-    amount = serializers.IntegerField(required=True)
+    amount = serializers.FloatField(required=True)
 
 
 class GetRankSerializer(serializers.Serializer):
