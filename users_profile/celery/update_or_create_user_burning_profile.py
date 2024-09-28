@@ -1,6 +1,6 @@
 from main_mining.service.read import Read
 from users_profile.serializers import *
-from utils.JSONExtractor import extractor
+from utils.JSONExtractor import JSONExtractor
 from utils.keystone import *
 
 
@@ -15,7 +15,7 @@ def update_or_create_burning_profile(account_id, keypair):
 
     main_read = Read(valid_keypair)
     res = main_read.get_portfolio(valid_address.get_valid_address())
-    data.update(extractor.get_burning_portfolio(res.value_serialized))
+    data.update(JSONExtractor().get_burning_portfolio(res.value_serialized))
 
     user_burning_profile, created = UserBurningProfile.objects.update_or_create(
         account_id=data['account_id'],

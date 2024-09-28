@@ -1,155 +1,137 @@
-from utils.token_rate_calculation import *
+from typing import Any, Dict, Optional, Tuple
+from utils.token_rate_calculation import DecimalTruncation
 import datetime
-
+import numbers  # Ensure this is correctly imported or defined
 
 class JSONExtractor:
-
-    def __init__(self):
-        self.checks = False
-
-    def extract_last_ok(self, data):
+    def extract_last_ok(self, data: Any) -> Tuple[Optional[Any], bool]:
         if isinstance(data, dict):
             for key, value in data.items():
                 if key == "Ok":
-                    self.checks = True
-                    return self.extract_last_ok(value)
+                    return self.extract_last_ok(value)[0], True
                 elif key == "Err":
-                    self.checks = False
-                    return self.extract_last_ok(value)
+                    return self.extract_last_ok(value)[0], False
                 else:
-                    result = self.extract_last_ok(value)
+                    result, status = self.extract_last_ok(value)
                     if result is not None and result != value:
-                        return result
-        elif isinstance(data, (dict, list, tuple, int, str)):
-            return data
+                        return result, status
+        elif isinstance(data, (list, tuple)):
+            for item in data:
+                result, status = self.extract_last_ok(item)
+                if result is not None:
+                    return result, status
+        elif isinstance(data, (int, str, float)):
+            return data, False
+        return None, False
+
+    def estimate_exchange_rate_usdt_to_d9(self, data: Any) -> Optional[Dict[str, str]]:
+        keys = ['usdt', 'd9']
+        value, checks = self.extract_last_ok(data)
+        if value and isinstance(value, (list, tuple)) and len(value) == 2:
+            data_dict = dict(zip(keys, value))
+            data_dict['usdt'] = DecimalTruncation(2).format_usdt(data_dict['usdt'])
+            data_dict['d9'] = DecimalTruncation(2).format_d9(data_dict['d9'])
+            if checks:
+                return data_dict
         return None
 
-    def estimate_exchange_rate_usdt_to_d9(self, data):
-        keys = ['usdt', 'd9']
-        value = self.extract_last_ok(data)
-        data = dict(zip(keys, value))
-        data['usdt'] = numbers.DecimalTruncation(2).format_usdt(data['usdt'])
-        data['d9'] = numbers.DecimalTruncation(2).format_d9(data['d9'])
-        if self.checks:
-            return data
-        return value
-
-    def estimate_exchange_rate_d9_to_usdt(self, data):
+    def estimate_exchange_rate_d9_to_usdt(self, data: Any) -> Optional[Dict[str, str]]:
         keys = ['d9', 'usdt']
-        value = self.extract_last_ok(data)
-        data = dict(zip(keys, value))
-        data['usdt'] = numbers.DecimalTruncation(2).format_usdt(data['usdt'])
-        data['d9'] = numbers.DecimalTruncation(2).format_d9(data['d9'])
-        if self.checks:
-            return data
-        return value
+        value, checks = self.extract_last_ok(data)
+        if value and isinstance(value, (list, tuple)) and len(value) == 2:
+            data_dict = dict(zip(keys, value))
+            data_dict['usdt'] = DecimalTruncation(2).format_usdt(data_dict['usdt'])
+            data_dict['d9'] = DecimalTruncation(2).format_d9(data_dict['d9'])
+            if checks:
+                return data_dict
+        return None
 
-    def d9_to_usdt(self, data):
+    def d9_to_usdt(self, data: Any) -> Optional[Dict[str, Any]]:
         if data is None:
             return None
-        keys = ['d9', 'usdt']
-        value = self.extract_last_ok(data)
-        if self.checks:
-            return dict(zip(keys, value))
-        return value
+        value, checks = self.extract_last_ok(data)
+        if checks and isinstance(value, (list, tuple)) and len(value) == 2:
+            return {'d9': value[0], 'usdt': value[1]}
+        return None
 
-    def usdt_to_d9(self, data):
+    def usdt_to_d9(self, data: Any) -> Optional[Dict[str, Any]]:
         if data is None:
             return None
-        keys = ['usdt', 'd9']
-        value = self.extract_last_ok(data)
-        if self.checks:
-            return dict(zip(keys, value))
-        return value
+        value, checks = self.extract_last_ok(data)
+        if checks and isinstance(value, (list, tuple)) and len(value) == 2:
+            return {'usdt': value[0], 'd9': value[1]}
+        return None
 
-    def get_data_or_err(self, data):
-        value = self.extract_last_ok(data)
-        if self.checks:
-            return value
-        return value
+    def get_data_or_err(self, data: Any) -> Optional[Any]:
+        value, checks = self.extract_last_ok(data)
+        return value if checks else None
 
-    def get_balances_d9(self, data):
+    @staticmethod
+    def get_balances_d9(data: Any) -> Optional[Any]:
+        if data and hasattr(data, 'value_serialized'):
+            return data.value_serialized.get('data', {}).get('free')
+        return None
 
-        if data is not None:
-            self.checks = True
-        self.checks = False
-
-        return data.value_serialized['data']['free']
-
-    def get_transfer_data(self, data):
-
-        if data is not None:
-            self.checks = True
-        self.checks = False
-
-        return {
-            "block_hash": data.block_hash,
-            "extrinsic_hash": data.extrinsic_hash,
-            "total_fee_amount": numbers.DecimalTruncation(7).format_d9(data.total_fee_amount),
-        }
-
-    def get_burning_portfolio(self, data):
-
-        if isinstance(data, dict):
-            self.checks = True
-        self.checks = False
-        data = data.get('result', {}).get('Ok', {}).get('data', {})
-        res = data['Ok']
-
-        if res:
+    @staticmethod
+    def get_transfer_data(data: Any) -> Optional[Dict[str, Any]]:
+        if data and hasattr(data, 'block_hash') and hasattr(data, 'extrinsic_hash') and hasattr(data, 'total_fee_amount'):
             return {
-                "amount_burned": numbers.DecimalTruncation(2).format_d9(res['amount_burned']),
-                "balance_due": numbers.DecimalTruncation(2).format_d9(res['balance_due']),
-                "balance_paid": numbers.DecimalTruncation(2).format_d9(res['balance_paid']),
-                "last_withdrawal": res['last_withdrawal']['time'],
-                "last_burn": res['last_burn']['time'],
+                "block_hash": data.block_hash,
+                "extrinsic_hash": data.extrinsic_hash,
+                "total_fee_amount": DecimalTruncation(7).format_d9(data.total_fee_amount),
+            }
+        return None
+
+    @staticmethod
+    def get_burning_portfolio(data: Dict[str, Any]) -> Dict[str, Any]:
+        result = data.get('result', {}).get('Ok', {}).get('data', {}).get('Ok', {})
+        if result:
+            return {
+                "amount_burned": DecimalTruncation(2).format_d9(result.get('amount_burned', 0)),
+                "balance_due": DecimalTruncation(2).format_d9(result.get('balance_due', 0)),
+                "balance_paid": DecimalTruncation(2).format_d9(result.get('balance_paid', 0)),
+                "last_withdrawal": result.get('last_withdrawal', {}).get('time', 0),
+                "last_burn": result.get('last_burn', {}).get('time', 0),
             }
         else:
             return {
-                "amount_burned": 0,
-                "balance_due": 0,
-                "balance_paid": 0,
+                "amount_burned": "0",
+                "balance_due": "0",
+                "balance_paid": "0",
                 "last_withdrawal": 0,
                 "last_burn": 0,
             }
 
-    def get_merchant_portfolio(self, data):
-
-        if isinstance(data, dict):
-            self.checks = True
-        self.checks = False
-
-        data = data.get('result', {}).get('Ok', {}).get('data', {})
-        res = data['Ok']
-
-        if res:
-            timestamp = res['last_conversion']
+    @staticmethod
+    def get_merchant_portfolio(data: Dict[str, Any]) -> Dict[str, Any]:
+        result = data.get('result', {}).get('Ok', {}).get('data', {}).get('Ok', {})
+        if result:
+            timestamp = result.get('last_conversion', 0)
             dt = datetime.datetime.fromtimestamp(timestamp / 1000)
             now = datetime.datetime.now()
             days_difference = (now - dt).days
-            redeemed_usdt = numbers.DecimalTruncation(2).format_usdt((res['green_points'] + res['relationship_factors'][
-                0] + res['relationship_factors'][1]) * 0.0005 / 100 * days_difference)
+            redeemed_usdt = DecimalTruncation(2).format_usdt(
+                (result.get('green_points', 0) + sum(result.get('relationship_factors', [0, 0]))) * 0.0005 / 100 * days_difference
+            )
 
             return {
-                "green_points": numbers.DecimalTruncation(2).format_usdt(res['green_points']),
-                "relationship_green_points": numbers.DecimalTruncation(2).format_usdt(res['green_points'] * 0.0005),
-                "relationship_red_points": numbers.DecimalTruncation(2).format_usdt(
-                    res['relationship_factors'][0] + res['relationship_factors'][1]),
-                "last_conversion": res['last_conversion'],
+                "green_points": DecimalTruncation(2).format_usdt(result.get('green_points', 0)),
+                "relationship_green_points": DecimalTruncation(2).format_usdt(result.get('green_points', 0) * 0.0005),
+                "relationship_red_points": DecimalTruncation(2).format_usdt(
+                    sum(result.get('relationship_factors', [0, 0]))
+                ),
+                "last_conversion": timestamp,
                 "redeemed_usdt": redeemed_usdt,
-                "redeemed_d9": numbers.DecimalTruncation(2).format_d9(res['redeemed_d9']),
-                "created_at": res['created_at'],
+                "redeemed_d9": DecimalTruncation(2).format_d9(result.get('redeemed_d9', 0)),
+                "created_at": result.get('created_at', 0),
             }
         else:
             return {
-                "green_points": 0,
-                "relationship_green_points": 0,
-                "relationship_red_points": 0,
+                "green_points": "0",
+                "relationship_green_points": "0",
+                "relationship_red_points": "0",
                 "last_conversion": 0,
-                "redeemed_usdt": 0,
-                "redeemed_d9": 0,
+                "redeemed_usdt": "0",
+                "redeemed_d9": "0",
                 "created_at": 0,
             }
-
-
-extractor = JSONExtractor()

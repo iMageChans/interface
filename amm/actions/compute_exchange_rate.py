@@ -1,6 +1,6 @@
 from base.actions import BaseActionsRead
 from utils.token_rate_calculation import *
-from utils.numbers import DecimalTruncation
+from utils.token_rate_calculation import DecimalTruncation
 
 
 class ComputeExchangeRate(BaseActionsRead):

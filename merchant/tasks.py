@@ -1,16 +1,37 @@
+# merchant/tasks.py
+
 from celery import shared_task
-from merchant import celery
-
-
-@shared_task
-def update_or_created_get_merchant_expiry_celery(account_id, keypair):
-    merchant_expiry = celery.update_or_created_get_merchant_expiry(account_id=account_id, keypair=keypair)
-    print({"account_id": account_id, "merchant_expiry": merchant_expiry})
-    return merchant_expiry
-
+from substrateinterface import Keypair
+from merchant.models import TransactionRecord
+from merchant.service.exec import Exec
+from utils.keystone import check_keypair
 
 @shared_task
-def update_or_created_get_user_merchant_profile_celery(account_id, keypair):
-    user_merchant_profile = celery.update_or_created_get_user_merchant_profile(account_id=account_id, keypair=keypair)
-    print({"account_id": account_id, "user_merchant_profile": user_merchant_profile})
-    return user_merchant_profile
+def execute_transaction(transaction_id, keypair_uri):
+    transaction = TransactionRecord.objects.get(id=transaction_id)
+    try:
+        params = transaction.params.copy()
+        operation = transaction.operation
+
+        keypair = check_keypair(keypair_uri)
+
+        exec_instance = Exec(keypair=keypair)
+
+        method = getattr(exec_instance, operation, None)
+        if not method:
+            raise ValueError(f'Unsupported operation: {operation}')
+
+        result = method(**params)
+
+        if result.is_success:
+            transaction.status = 'success'
+            transaction.result = {'data': result.value}
+        else:
+            transaction.status = 'failed'
+            transaction.result = {'error': result.error_message}
+        transaction.save()
+
+    except Exception as e:
+        transaction.status = 'failed'
+        transaction.result = {'exception': str(e)}
+        transaction.save()

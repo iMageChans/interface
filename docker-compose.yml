@@ -1,3 +1,5 @@
+version: '3.8'
+
 services:
   db:
     image: postgres:15
@@ -11,15 +13,25 @@ services:
     ports:
       - "${DATABASE_PORT}:5432"
     command: ["postgres", "-c", "max_connections=200"]
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
 
   redis:
     image: redis:latest
     ports:
       - "6379:6379"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
 
   web:
     build: .
-#    command: ["/entrypoint.sh", "python", "manage.py", "runserver", "0.0.0.0:8000"]
+    entrypoint: /entrypoint.sh
     command: ["/entrypoint.sh", "gunicorn", "interface.wsgi:application", "--bind", "0.0.0.0:8000", "--workers", "4"]
     volumes:
       - .:/app
@@ -28,6 +40,11 @@ services:
     depends_on:
       - db
       - redis
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
     env_file:
       - .env
     environment:
@@ -41,16 +58,21 @@ services:
       DATABASE_URL: postgres://${DATABASE_USER}:${DATABASE_PASSWORD}@${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_NAME}
       CELERY_BROKER_URL: redis://redis:6379/0
       CELERY_RESULT_BACKEND: redis://redis:6379/0
-#      CORS_ALLOWED_ORIGINS: "http://localhost:5173,https://d9-test-server.q6z4kzhr.uk"
 
   celery:
     build: .
+    entrypoint: /entrypoint.sh
     command: celery -A interface worker --loglevel=info
     volumes:
       - .:/app
     depends_on:
       - db
       - redis
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
     env_file:
       - .env
     environment:
@@ -67,12 +89,18 @@ services:
 
   celery-beat:
     build: .
+    entrypoint: /entrypoint.sh
     command: celery -A interface beat --loglevel=info
     volumes:
       - .:/app
     depends_on:
       - db
       - redis
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
     env_file:
       - .env
     environment:
@@ -86,13 +114,3 @@ services:
       DATABASE_URL: postgres://${DATABASE_USER}:${DATABASE_PASSWORD}@${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_NAME}
       CELERY_BROKER_URL: redis://redis:6379/0
       CELERY_RESULT_BACKEND: redis://redis:6379/0
-
-#  flower:
-#    build: .
-#    command: ["flower", "--port=5555", "--broker=redis://redis:6379/0"]
-#    ports:
-#      - "5555:5555"
-#    depends_on:
-#      - redis
-#    environment:
-#      DATABASE_URL: postgres://django_user:django_password@db:5432/django_db

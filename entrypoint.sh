@@ -6,6 +6,11 @@ while ! nc -z db 5432; do
   sleep 1
 done
 
+while ! nc -z redis 6379; do
+  echo "Waiting for Redis..."
+  sleep 2
+done
+
 # 运行数据库迁移
 python manage.py migrate
 

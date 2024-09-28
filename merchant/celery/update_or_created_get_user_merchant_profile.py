@@ -1,6 +1,6 @@
 from users_profile.models import *
 from merchant.service.read import Read
-from utils.JSONExtractor import extractor
+from utils.JSONExtractor import JSONExtractor
 from utils.keystone import check_keypair, ValidAddress
 
 
@@ -15,7 +15,7 @@ def update_or_created_get_user_merchant_profile(account_id, keypair):
 
     merchant_read = Read(valid_keypair)
     res = merchant_read.get_user_merchant_profile(valid_address.get_valid_address())
-    data.update(extractor.get_merchant_portfolio(res.value_serialized))
+    data.update(JSONExtractor().get_merchant_portfolio(res.value_serialized))
 
     user_merchant_profile, created = UserMerchantProfile.objects.update_or_create(
         account_id=data['account_id'],

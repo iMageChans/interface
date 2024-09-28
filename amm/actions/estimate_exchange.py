@@ -1,7 +1,7 @@
 from base.actions import BaseActionsRead
 from amm.service.read import Read
 from utils.numbers import to_number
-from utils.JSONExtractor import extractor
+from utils.JSONExtractor import JSONExtractor
 
 
 class EstimateExchange(BaseActionsRead):
@@ -25,12 +25,12 @@ class EstimateExchange(BaseActionsRead):
         if self.from_currency == "USDT" and self.to_currency == "D9":
 
             return {
-                "rate": extractor.estimate_exchange_rate_usdt_to_d9(self.results.value_serialized),
-                "meta_data": extractor.usdt_to_d9(self.results.value_serialized)
+                "rate": JSONExtractor().estimate_exchange_rate_usdt_to_d9(self.results.value_serialized),
+                "meta_data": JSONExtractor().usdt_to_d9(self.results.value_serialized)
             }
         else:
 
             return {
-                "rate": extractor.estimate_exchange_rate_d9_to_usdt(self.results.value_serialized),
-                "meta_data": extractor.d9_to_usdt(self.results.value_serialized)
+                "rate": JSONExtractor().estimate_exchange_rate_d9_to_usdt(self.results.value_serialized),
+                "meta_data": JSONExtractor().d9_to_usdt(self.results.value_serialized)
             }

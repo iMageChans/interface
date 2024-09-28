@@ -15,9 +15,9 @@ class Exec(D9Contract):
             keypair=keypair
         )
 
-    def subscribe(self, usdt_base_units: int) -> ContractExecutionReceipt:
+    def subscribe(self, amount: int) -> ContractExecutionReceipt:
         params = {
-            "usdt_amount": usdt_base_units,
+            "usdt_amount": amount,
         }
         return self.contract_exec('subscribe', params)
 
@@ -26,26 +26,26 @@ class Exec(D9Contract):
 
     def give_points_d9(self, consumer_id: str, amount: int) -> ContractExecutionReceipt:
         params = {
-            "consumer_id": consumer_id,
+            "to_address": consumer_id,
         }
         return self.contract_exec('give_green_points_d9', params, value=amount)
 
     def give_points_usdt(self, consumer_id: str, amount: int) -> ContractExecutionReceipt:
         params = {
-            "consumer_id": consumer_id,
+            "to_address": consumer_id,
             "usdt_payment": amount
         }
         return self.contract_exec('give_green_points_usdt', params)
 
     def send_usdt_payment_to_merchant(self, merchant_id: str, amount: int) -> ContractExecutionReceipt:
         params = {
-            "merchant_id": merchant_id,
+            "to_address": merchant_id,
             "usdt_amount": amount
         }
         return self.contract_exec('send_usdt_payment_to_merchant', params, value=amount)
 
     def send_d9_payment_to_merchant(self, merchant_id: str, amount: int) -> ContractExecutionReceipt:
         params = {
-            "merchant_id": merchant_id,
+            "to_address": merchant_id,
         }
         return self.contract_exec('send_d9_payment_to_merchant', params, value=amount)

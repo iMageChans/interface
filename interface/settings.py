@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 import os
+import logging
+import logging.config
 import environ
 from pathlib import Path
 
@@ -57,7 +59,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     "rest_framework",
     'corsheaders',
-    'drf_yasg',
+    'drf_spectacular',
     'snowflake',
     "amm.apps.AmmConfig",
     "balances.apps.BalancesConfig",
@@ -70,7 +72,9 @@ INSTALLED_APPS = [
     "votings.apps.VotingsConfig",
     "node_reward.apps.NodeRewardConfig",
     "referrals.apps.ReferralsConfig",
-    "record.apps.RecordConfig"
+    "record.apps.RecordConfig",
+    'wallets.apps.WalletsConfig',
+    'orders.apps.OrderConfig'
 ]
 
 MIDDLEWARE = [
@@ -191,3 +195,76 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 SF_START_TIME = 1724497063000
 
 SF_WORKER_ID = 1
+
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10,
+    'DEFAULT_THROTTLE_CLASSES': [
+        'rest_framework.throttling.UserRateThrottle',
+    ],
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+    'DEFAULT_THROTTLE_RATES': {
+        'user': '100/minute',
+    }
+}
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Max API',
+    'DESCRIPTION': 'API documentation description',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+}
+
+LOG_DIR = BASE_DIR / 'logs'
+LOG_DIR.mkdir(exist_ok=True)
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
+            'style': '{',
+        },
+        'simple': {
+            'format': '{levelname} {message}',
+            'style': '{',
+        },
+    },
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'verbose',
+            'level': 'DEBUG',
+        },
+        'file': {
+            'class': 'logging.FileHandler',
+            'filename': LOG_DIR / 'django.log',
+            'formatter': 'verbose',
+            'level': 'INFO',
+        },
+    },
+    'loggers': {
+        '': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+        'django': {
+            'handlers': ['console', 'file'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+        'celery': {
+            'handlers': ['console'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+        'interface': {  # 替换为您的 Django 应用名称
+            'handlers': ['console'],
+            'level': 'DEBUG',
+            'propagate': False,
+        },
+    },
+}
+

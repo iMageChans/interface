@@ -1,7 +1,6 @@
 from base.actions import BaseActionsRead
 from main_mining import celery
-from utils.JSONExtractor import extractor
-from utils import numbers
+from utils.token_rate_calculation import DecimalTruncation
 
 
 class GetTotalBurned(BaseActionsRead):
@@ -11,7 +10,7 @@ class GetTotalBurned(BaseActionsRead):
         self.results = total_burned.totals
 
     def serializers(self):
-        values = numbers.DecimalTruncation(4).format_d9(self.results)
+        values = DecimalTruncation(4).format_d9(self.results)
         return values
 
     def is_success(self):

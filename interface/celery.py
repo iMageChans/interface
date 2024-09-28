@@ -13,26 +13,30 @@ app.config_from_object('django.conf:settings', namespace='CELERY')
 
 app.autodiscover_tasks()
 
+app.conf.update(
+    worker_hijack_root_logger=False,
+)
 
-app.conf.beat_schedule = {
-    'update_or_created_node_user_vote_celery': {
-        'task': 'votings.tasks.update_or_created_node_user_vote_celery',
-        'schedule': timedelta(seconds=600),
-    },
-    'get_rank': {
-        'task': 'votings.tasks.get_rank',
-        'schedule': timedelta(seconds=600),
-    },
-    'update_or_created_all_volume_celery': {
-        'task': 'mining.tasks.update_or_created_all_volume_celery',
-        'schedule': timedelta(seconds=300),
-    },
-    'update_or_created_currency_profile_celery': {
-        'task': 'usdt.tasks.update_or_created_currency_profile_celery',
-        'schedule': timedelta(seconds=600),
-    },
-    'update_or_created_token_market_information_celery': {
-        'task': 'amm.tasks.update_or_created_token_market_information_celery',
-        'schedule': timedelta(seconds=60),
-    },
-}
+
+# app.conf.beat_schedule = {
+#     'update_or_created_node_user_vote_celery': {
+#         'task': 'votings.tasks.update_or_created_node_user_vote_celery',
+#         'schedule': timedelta(seconds=600),
+#     },
+#     'get_rank': {
+#         'task': 'votings.tasks.get_rank',
+#         'schedule': timedelta(seconds=600),
+#     },
+#     'update_or_created_all_volume_celery': {
+#         'task': 'mining.tasks.update_or_created_all_volume_celery',
+#         'schedule': timedelta(seconds=300),
+#     },
+#     'update_or_created_currency_profile_celery': {
+#         'task': 'usdt.tasks.update_or_created_currency_profile_celery',
+#         'schedule': timedelta(seconds=600),
+#     },
+#     'update_or_created_token_market_information_celery': {
+#         'task': 'amm.tasks.update_or_created_token_market_information_celery',
+#         'schedule': timedelta(seconds=60),
+#     },
+# }

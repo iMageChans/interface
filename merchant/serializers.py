@@ -1,39 +1,29 @@
+# merchant/serializers.py
+
 from rest_framework import serializers
 
-from base.serializers import KeypairSerializer
-
-
-class GetMerchantExpirySerializer(KeypairSerializer):
-    account_id = serializers.CharField(required=False)
-
-
-class GetUserMerchantProfileSerializer(KeypairSerializer):
-    account_id = serializers.CharField(required=False)
-
-
-class SubscribeSerializer(KeypairSerializer):
-    usdt_base_units = serializers.IntegerField(required=True)
-
-
-class RedeemD9Serializer(KeypairSerializer):
+class BaseSerializer(serializers.Serializer):
+    # 移除 KeypairSerializer，直接使用 BaseSerializer
     pass
 
+class SubscribeSerializer(BaseSerializer):
+    amount = serializers.IntegerField(required=True)
 
-class GivePointsD9Serializer(KeypairSerializer):
-    consumer_id = serializers.CharField(required=True)
+class RedeemD9Serializer(BaseSerializer):
+    pass
+
+class GivePointsD9Serializer(BaseSerializer):
+    to_address = serializers.CharField(required=True)
     amount = serializers.FloatField(required=True)
 
-
-class GivePointsUSDTSerializer(KeypairSerializer):
-    consumer_id = serializers.CharField(required=True)
+class GivePointsUSDTSerializer(BaseSerializer):
+    to_address = serializers.CharField(required=True)
     amount = serializers.FloatField(required=True)
 
-
-class USDTPaymentSerializer(KeypairSerializer):
-    merchant_id = serializers.CharField(required=True)
+class USDTPaymentSerializer(BaseSerializer):
+    to_address = serializers.CharField(required=True)
     amount = serializers.FloatField(required=True)
 
-
-class D9PaymentSerializer(KeypairSerializer):
-    merchant_id = serializers.CharField(required=True)
+class D9PaymentSerializer(BaseSerializer):
+    to_address = serializers.CharField(required=True)
     amount = serializers.FloatField(required=True)

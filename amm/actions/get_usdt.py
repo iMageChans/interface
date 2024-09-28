@@ -5,7 +5,7 @@ from utils import numbers
 from balances.tasks import update_or_create_d9_balance_celery
 from usdt.tasks import update_or_create_usdt_balance_celery
 from amm.tasks import update_or_created_token_market_information_celery
-from utils.JSONExtractor import extractor
+from utils.JSONExtractor import JSONExtractor
 from record import models
 
 
@@ -20,7 +20,7 @@ class GetUSDT(BaseActionsExec):
 
 
     def serializers(self):
-        values = extractor.get_transfer_data(self.results)
+        values = JSONExtractor().get_transfer_data(self.results)
         return values
 
     def is_success(self):

@@ -6,8 +6,7 @@ from utils import numbers
 from amm.tasks import update_or_created_token_market_information_celery
 from balances.tasks import update_or_create_d9_balance_celery
 from usdt.tasks import update_or_create_usdt_balance_celery
-from utils.JSONExtractor import extractor
-from record import models
+from utils.JSONExtractor import JSONExtractor
 
 
 class AddLiquidity(BaseActionsExec):
@@ -24,7 +23,7 @@ class AddLiquidity(BaseActionsExec):
 
 
     def serializers(self):
-        values = extractor.get_transfer_data(self.results)
+        values = JSONExtractor().get_transfer_data(self.results)
         return values
 
     def is_success(self):

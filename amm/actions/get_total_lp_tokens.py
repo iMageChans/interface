@@ -1,6 +1,6 @@
 from base.actions import BaseActionsRead
 from amm.service.read import Read
-from utils.JSONExtractor import extractor
+from utils.JSONExtractor import JSONExtractor
 
 
 class GetTotalLpTokens(BaseActionsRead):
@@ -9,7 +9,7 @@ class GetTotalLpTokens(BaseActionsRead):
         self.results = Read(self.keypair).get_total_lp_tokens()
 
     def serializers(self):
-        return extractor.get_data_or_err(self.results.value_serialized)
+        return JSONExtractor().get_data_or_err(self.results.value_serialized)
 
     def is_success(self):
         if self.results is None:

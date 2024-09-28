@@ -1,9 +1,7 @@
 from base.actions import BaseActionsRead
 from usdt.service.read import Read
-from usdt.tasks import update_or_create_usdt_balance_celery
-from users_profile.serializers import *
-from utils import numbers
-from utils.JSONExtractor import extractor
+from utils.token_rate_calculation import DecimalTruncation
+from utils.JSONExtractor import JSONExtractor
 
 
 class GetBalances(BaseActionsRead):
@@ -13,9 +11,8 @@ class GetBalances(BaseActionsRead):
         self.results = usdt_read.balance_of(owner=self.account_id.get_valid_address())
 
     def serializers(self):
-        return {"balance_usdt": numbers
-                    .DecimalTruncation(2)
-                    .format_usdt(extractor.get_data_or_err(self.results.value_serialized))}
+        return {"balance_usdt": DecimalTruncation(2)
+                    .format_usdt(JSONExtractor().get_data_or_err(self.results.value_serialized))}
 
     def is_success(self):
         return True

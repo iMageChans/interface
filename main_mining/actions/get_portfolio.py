@@ -1,6 +1,6 @@
 from base.actions import BaseActionsRead
 from main_mining.service.read import Read
-from utils.JSONExtractor import extractor
+from utils.JSONExtractor import JSONExtractor
 
 
 class GetUserBurningProfile(BaseActionsRead):
@@ -11,7 +11,7 @@ class GetUserBurningProfile(BaseActionsRead):
         self.results = main_read.get_portfolio(self.account_id.get_valid_address())
 
     def serializers(self):
-        return extractor.get_burning_portfolio(self.results.value_serialized)
+        return JSONExtractor().get_burning_portfolio(self.results.value_serialized)
 
     def is_success(self):
         return True

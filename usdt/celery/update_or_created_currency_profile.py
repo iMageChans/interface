@@ -1,5 +1,5 @@
 import requests
-from utils.numbers import DecimalTruncation
+from utils.token_rate_calculation import DecimalTruncation
 from usdt.models import CurrencyProfile
 
 

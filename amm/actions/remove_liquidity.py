@@ -5,7 +5,7 @@ from balances.tasks import update_or_create_d9_balance_celery
 from usdt.tasks import update_or_create_usdt_balance_celery
 from amm.tasks import update_or_created_token_market_information_celery
 from utils import numbers
-from utils.JSONExtractor import extractor
+from utils.JSONExtractor import JSONExtractor
 from record import models
 
 
@@ -18,7 +18,7 @@ class RemoveLiquidity(BaseActionsExec):
 
 
     def serializers(self):
-        return extractor.get_data_or_err(self.results)
+        return JSONExtractor().get_data_or_err(self.results)
 
     def is_success(self):
         if self.results.is_success:

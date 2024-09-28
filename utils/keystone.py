@@ -1,48 +1,48 @@
 from substrateinterface import Keypair
+from typing import Union, Optional
+import logging
+
+logger = logging.getLogger(__name__)
 
 
-def check_keypair(keypair, path=None):
-    if path is None or path == "":
+def check_keypair(keypair: Union[str, list], path: Optional[str] = None) -> Keypair:
+    try:
+        if path:
+            uri = f"{keypair}{path}"
+            return Keypair.create_from_uri(uri, ss58_format=9)
+
+        if isinstance(keypair, list):
+            mnemonic = ' '.join(keypair)
+            return Keypair.create_from_mnemonic(mnemonic, ss58_format=9)
+
         if Keypair.validate_mnemonic(keypair):
-            try:
-                return Keypair.create_from_mnemonic(keypair, ss58_format=9)
-            except ValueError:
-                raise ValueError("ECDSA mnemonic only supports english")
-        elif isinstance(keypair, list):
-            try:
-                mnemonic = ' '.join(keypair)
-                return Keypair.create_from_mnemonic(mnemonic, ss58_format=9)
-            except ValueError:
-                raise ValueError("ECDSA mnemonic only supports english")
-        elif isinstance(keypair, str):
-            try:
-                keypair = Keypair.create_from_private_key(keypair, ss58_format=9)
-            except ValueError:
-                keypair = Keypair.create_from_seed(keypair, ss58_format=9)
-            return keypair
-    else:
-        mnemonic = keypair + path
-        return Keypair.create_from_uri(mnemonic, ss58_format=9)
+            return Keypair.create_from_mnemonic(keypair, ss58_format=9)
+
+        return Keypair.create_from_private_key(keypair, ss58_format=9)
+
+    except Exception as e:
+        logger.error(f"Invalid keypair: {e}")
+        raise ValueError("Invalid keypair provided.") from e
 
 
 class ValidAddress:
-    def __init__(self, address):
+    PREFIX = "Dn"
+
+    def __init__(self, address: str):
         self.address = address
 
-    def get_valid_address(self):
-        prefix = "Dn"
-        if self.address.startswith(prefix):
-            # 提取实际地址部分
-            actual_address = self.address[len(prefix):]
-            try:
-                keypair = Keypair(ss58_address=actual_address)
-                return actual_address
-            except ValueError as e:
-                print(f"Invalid address: {e}")
-                return None
-        else:
-            print("Invalid prefix")
-            return self.address
+    def get_valid_address(self) -> Optional[str]:
+        if not self.address.startswith(self.PREFIX):
+            logger.error("Invalid prefix.")
+            return None
 
-    def mate_data_address(self):
+        actual_address = self.address[len(self.PREFIX):]
+        try:
+            Keypair(ss58_address=actual_address)
+            return actual_address
+        except ValueError as e:
+            logger.error(f"Invalid address: {e}")
+            return None
+
+    def get_original_address(self) -> str:
         return self.address

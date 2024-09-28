@@ -2,7 +2,7 @@ from rest_framework import serializers
 from amm.models import *
 from base.field import RoundedFloatField
 from base.serializers import KeypairSerializer
-from utils.numbers import DecimalTruncation
+from utils.token_rate_calculation import DecimalTruncation
 
 
 class TokenMarketInformationSerializer(serializers.ModelSerializer):

@@ -1,87 +1,80 @@
-def format_number(value, precision=12):
-    if isinstance(value, str):
-        value = float(value)
-
-    result = value / 10 ** precision
-
-    if result.is_integer():
-        return int(result)
-    else:
-        return result
+from decimal import Decimal, ROUND_DOWN
+from typing import Union
 
 
-def to_number(value, precision=12):
-    if isinstance(value, str):
-        value = float(value)
+def format_number(value: Union[str, float, int], precision: int = 12) -> Decimal:
+    """
+    Format the number by dividing by 10^precision.
 
-    result = value * 10 ** precision
+    :param value: The number to format.
+    :param precision: The precision factor.
+    :return: Formatted Decimal number.
+    :raises ValueError: If the input value is invalid.
+    """
+    try:
+        decimal_value = Decimal(str(value))
+        return decimal_value / (Decimal(10) ** precision)
+    except (ValueError, ArithmeticError) as e:
+        raise ValueError(f"Failed to format number: {e}") from e
 
-    if result.is_integer():
-        return int(result)
-    else:
-        return result
+
+def to_number(value: Union[str, float, int], precision: int = 12) -> int:
+    """
+    Convert the number by multiplying by 10^precision and ensure it is an unsigned integer.
+
+    :param value: The number to convert.
+    :param precision: The precision factor.
+    :return: Converted unsigned integer.
+    :raises ValueError: If the result is negative or not an integer.
+    """
+    try:
+        decimal_value = Decimal(str(value)) * (Decimal(10) ** precision)
+        # Ensure the result is an integer
+        if not decimal_value == decimal_value.to_integral_value():
+            raise ValueError("The converted number is not an integer.")
+        int_value = int(decimal_value)
+        if int_value < 0:
+            raise ValueError("The converted number is negative.")
+        return int_value
+    except (ValueError, ArithmeticError) as e:
+        raise ValueError(f"Failed to convert number: {e}") from e
 
 
-def format_d9(number):
+def format_d9(number: Union[str, float, int, Decimal]) -> Decimal:
+    """
+    Format a D9 token value by dividing by 10^12.
+
+    :param number: The number to format.
+    :return: Formatted Decimal number.
+    """
     return format_number(number)
 
 
-def format_usdt(number):
+def format_usdt(number: Union[str, float, int, Decimal]) -> Decimal:
+    """
+    Format a USDT token value by dividing by 10^2.
+
+    :param number: The number to format.
+    :return: Formatted Decimal number.
+    """
     return format_number(number, 2)
 
 
-def to_d9(number):
+def to_d9(number: Union[str, float, int, Decimal]) -> int:
+    """
+    Convert a D9 token value by multiplying by 10^12 and return as an unsigned integer.
+
+    :param number: The number to convert.
+    :return: Converted unsigned integer.
+    """
     return to_number(number)
 
 
-def to_usdt(number):
+def to_usdt(number: Union[str, float, int, Decimal]) -> int:
+    """
+    Convert a USDT token value by multiplying by 10^2 and return as an unsigned integer.
+
+    :param number: The number to convert.
+    :return: Converted unsigned integer.
+    """
     return to_number(number, 2)
-
-
-def get_return_percent(total_amount_burned):
-    first_threshold_amount = 200_000_000
-    percentage = 0.008
-
-    if total_amount_burned <= first_threshold_amount:
-        return percentage
-
-    excess_amount = total_amount_burned - first_threshold_amount
-    reductions = excess_amount // 100_000_000 + 1
-    divided_percent_by = 2 ** reductions
-
-    return percentage / divided_percent_by
-
-
-class DecimalTruncation:
-    def __init__(self, precision):
-        self.precision = precision
-
-    def truncate(self, number):
-        """
-        :param number: Decimals that need to be truncated
-        :return: Captured numbers
-        """
-        if not isinstance(number, (float, int)):
-            raise ValueError("The input must be a floating-point number or an integer")
-
-        number_str = f"{number:.{self.precision + 10}f}"
-        integer_part, decimal_part = number_str.split('.')
-        truncated_decimal_part = decimal_part[:self.precision]
-
-        if len(truncated_decimal_part) < 2:
-            truncated_decimal_part = truncated_decimal_part.ljust(2, '0')
-
-        truncated_number_str = f"{integer_part}.{truncated_decimal_part}"
-        return truncated_number_str
-
-    def format_d9(self, number):
-        return self.truncate(format_number(number))
-
-    def format_usdt(self, number):
-        return self.truncate(format_number(number, 2))
-
-    def format_point(self, number):
-        return self.truncate(format_number(number, 3))
-
-    def format(self, number):
-        return self.truncate(format_number(number, 0))

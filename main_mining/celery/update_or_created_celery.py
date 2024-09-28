@@ -1,7 +1,7 @@
 from substrateinterface import Keypair
 from main_mining.service.read import Read
 from main_mining.models import *
-from utils.JSONExtractor import extractor
+from utils.JSONExtractor import JSONExtractor
 
 
 def update_or_created_total_burned():
@@ -9,7 +9,7 @@ def update_or_created_total_burned():
     keypair = Keypair.create_from_mnemonic(mnemonic)
 
     read = Read(keypair).get_total_burned()
-    res = extractor.get_data_or_err(read.value_serialized)
+    res = JSONExtractor().get_data_or_err(read.value_serialized)
 
     data = dict()
     data.update({"totals": res})

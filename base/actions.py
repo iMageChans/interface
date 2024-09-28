@@ -1,5 +1,5 @@
 from utils import keystone
-from utils.JSONExtractor import extractor
+from utils.JSONExtractor import JSONExtractor
 
 
 class BaseAction:
@@ -26,12 +26,13 @@ class BaseActionsRead(BaseAction):
         super().__init__(validated_data)
 
     def serializers(self):
-        values = extractor.get_data_or_err(self.results.value_serialized)
+        values = JSONExtractor().get_data_or_err(self.results.value_serialized)
         return values
 
     def is_success(self):
-        extractor.get_data_or_err(self.results.value_serialized)
-        return extractor.checks
+        if JSONExtractor().get_data_or_err(self.results.value_serialized):
+            return True
+        return False
 
 
 class BaseActionsExec(BaseAction):
@@ -39,7 +40,7 @@ class BaseActionsExec(BaseAction):
         super().__init__(validated_data)
 
     def serializers(self):
-        values = extractor.get_transfer_data(self.results)
+        values = JSONExtractor().get_transfer_data(self.results)
         return values
 
     def is_success(self):

@@ -2,7 +2,7 @@ from rest_framework import serializers
 
 from base.serializers import KeypairSerializer
 from mining.models import *
-from utils.numbers import DecimalTruncation
+from utils.token_rate_calculation import DecimalTruncation
 
 
 class AccumulativeRewardPoolSerializer(serializers.ModelSerializer):
